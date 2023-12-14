@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BloodDonateHub</string>
+
+    <string name="blood_Require">Request for Blood</string>
+    <string name="blood_Donate">Donate</string>
+    <string name="blood_Contribute">Contribute</string>
+</resources>
