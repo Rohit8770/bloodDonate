@@ -4,4 +4,39 @@
     <string name="blood_Require">Request for Blood</string>
     <string name="blood_Donate">Donate</string>
     <string name="blood_Contribute">Contribute</string>
+
+    <style name="NoUnderlineEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@null</item>
+    </style>
+
+    <string-array name="Blood_Type">
+        <item>Select_Blood_Type</item>
+        <item>Blood</item>
+        <item>platelets</item>
+
+    </string-array>
+
+    <string-array name="Blood_Group">
+        <item>Select_Blood_Group</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>A1+</item>
+        <item>A1-</item>
+        <item>A2+</item>
+        <item>A2-</item>
+        <item>A1B+</item>
+        <item>A1B-</item>
+        <item>A2B+</item>
+        <item>A2B-</item>
+        <item>Bombay Blood Group</item>
+        <item>INRA</item>
+        <item>Dont Know</item>
+
+    </string-array>
 </resources>

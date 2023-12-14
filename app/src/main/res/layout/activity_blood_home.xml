@@ -175,8 +175,7 @@
             android:id="@+id/cardRequestBlood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10ssp"
-            >
+            app:cardCornerRadius="@dimen/_10ssp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
