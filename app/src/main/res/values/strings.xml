@@ -4,6 +4,10 @@
     <string name="blood_Require">Request for Blood</string>
     <string name="blood_Donate">Donate</string>
     <string name="blood_Contribute">Contribute</string>
+    <string name="agreement">Terms of Use and Privacy Policy</string>
+    <string name="agreerighttic">I have read and agreed to these</string>
+    <string name="request_form">(Kindly fill the details correctly to help you better)</string>
+
 
     <style name="NoUnderlineEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:background">@null</item>
@@ -39,4 +43,20 @@
         <item>Dont Know</item>
 
     </string-array>
+
+    <string-array name="Blood_Unit">
+        <item>Select_Units</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

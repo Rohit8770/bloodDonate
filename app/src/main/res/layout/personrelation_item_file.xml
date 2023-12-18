@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2">
+
+
+            <LinearLayout
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_75ssp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_125sdp"
+                        android:importantForAccessibility="no"
+                        android:padding="10dp"
+                        android:src="@drawable/blood_icon_second" />
+
+                    <TextView
+                        android:id="@+id/txBloodGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="B+"
+                        android:layout_marginRight="@dimen/_5ssp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7ssp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sofia_pro_medium"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingHorizontal="5dp"
+                        android:text="Rohit Malviya"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sofia_pro_medium"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingHorizontal="5dp"
+                        android:text="6 Units"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <TextView
+                        android:id="@+id/txBrand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_1ssp"
+                        android:fontFamily="@font/sofia_pro_medium"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingHorizontal="5dp"
+                        android:text="(Blood)"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/txLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    android:gravity="start"
+                    android:hint="location Ahemdabad, india"
+                    android:paddingHorizontal="5dp"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/txCritical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5ssp"
+                    android:layout_marginTop="@dimen/_5ssp"
+                    android:fontFamily="@font/sofia_pro_medium"
+                    android:maxLines="1"
+                    android:text="Critical"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/txTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sofia_pro_medium"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:paddingHorizontal="5dp"
+                    android:text="Mondat, Dec, 4"
+                    android:textSize="@dimen/_13ssp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_40ssp"
+                    android:layout_height="@dimen/_28ssp"
+                    android:src="@drawable/share_icon"
+                    android:layout_marginTop="@dimen/_2ssp"/>
+                    <ImageView
+                        android:layout_width="@dimen/_30ssp"
+                        android:layout_height="@dimen/_25ssp"
+                        android:src="@drawable/location_share_icon"
+                        android:layout_marginTop="@dimen/_5ssp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40ssp"
+                        android:layout_gravity="end"
+                        android:gravity="end">
+                   <TextView
+                       android:layout_width="@dimen/_60ssp"
+                       android:layout_height="@dimen/_20ssp"
+                       android:layout_gravity="center"
+                       android:gravity="center"
+                       android:background="@drawable/shape_button"
+                       android:text="Accept"
+                       android:layout_marginRight="@dimen/_10ssp"
+                       android:textSize="@dimen/_14ssp"
+                       android:textColor="@color/new_white"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

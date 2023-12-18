@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.DonateMargeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40ssp"
+            android:padding="@dimen/_5ssp"
+            app:cardElevation="@dimen/_5ssp"
+            android:layout_margin="@dimen/_2ssp"
+            android:backgroundTint="@color/red">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="5">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7ssp">
+                    <ImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="@dimen/_40ssp"
+                        android:layout_height="@dimen/_25ssp"
+                        android:src="@drawable/back_icon" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Receivers List"
+                        android:layout_marginLeft="@dimen/_15ssp"
+                        android:textSize="@dimen/_17ssp"
+                        android:layout_marginRight="@dimen/_5ssp"
+                        android:textColor="@color/new_white"/>
+
+                </LinearLayout>
+
+                <!-- <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+                     <ImageView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/notification_icon" />
+                 </LinearLayout>-->
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/red"
+        app:tabGravity="start"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/white"
+
+        />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="7dp"/>
+
+</LinearLayout>
