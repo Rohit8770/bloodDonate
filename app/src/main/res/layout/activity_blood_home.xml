@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red"
+        android:background="@color/newBlue"
         android:layout_weight="0.4"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,11 +30,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/red">
+        android:backgroundTint="@color/newBlue">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40ssp"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/newBlue"
             android:layout_margin="@dimen/_3ssp"
             android:elevation="@dimen/_7ssp"
             app:cardElevation="@dimen/_7ssp">
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5ssp">
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_40ssp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/user_icon" />
                 </LinearLayout>
@@ -59,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
+                    android:layout_marginRight="@dimen/_15ssp"
                     android:gravity="center"
                     android:layout_gravity="center">
                     <TextView
@@ -66,7 +67,6 @@
                         android:layout_height="wrap_content"
                         android:text="Welcome"
                         android:textSize="@dimen/_15ssp"
-                        android:layout_marginRight="@dimen/_5ssp"
                         android:textColor="@color/white"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -168,16 +168,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ly2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5ssp">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvBloodType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5ssp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvBloodType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--<androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/_5ssp">
+                    <ImageView
+                        android:id="@+id/imgSteps"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_140sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/blood_bank_icon" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>-->
+
 
     <LinearLayout
         android:id="@+id/ly3"
@@ -301,59 +321,9 @@
             android:id="@+id/rcvBloodGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
     </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:layout_below="@+id/ly2">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            />
-            <!--<LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:layout_gravity="end">
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardContributeBlood"
-                    android:layout_width="@dimen/_130sdp"
-                    android:layout_height="@dimen/_90ssp"
-                    app:cardCornerRadius="@dimen/_10ssp"
-                    android:elevation="@dimen/_10ssp"
-                    app:cardElevation="@dimen/_10ssp"
-                    android:layout_margin="@dimen/_7ssp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
-                        <ImageView
-                            android:layout_width="@dimen/_80ssp"
-                            android:layout_height="@dimen/_60ssp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wallet_icon"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/blood_Contribute"
-                            android:fontFamily="@font/sofia_pro_semi_bold"
-                            android:textSize="@dimen/_12ssp"
-                            android:gravity="center"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>-->
-
-        </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

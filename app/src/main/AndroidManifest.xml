@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloodDonateHub"
         tools:targetApi="31">
-        <activity
-            android:name=".YourActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ContributeActivity"
             android:exported="false" />

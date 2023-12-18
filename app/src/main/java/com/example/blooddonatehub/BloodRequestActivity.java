@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class BloodRequestActivity extends AppCompatActivity {
     TextView txDate,txAgreeMentCondition;
     ImageView imgBack;
 
+    TextInputEditText etLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,8 @@ public class BloodRequestActivity extends AppCompatActivity {
         txCalender=findViewById(R.id.txCalender);
         txDate=findViewById(R.id.txDate);
         imgBack=findViewById(R.id.imgBack);
+        etLocation=findViewById(R.id.etLocation);
+       // txUnits=findViewById(R.id.txUnits);
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
 
@@ -66,12 +70,13 @@ public class BloodRequestActivity extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
-      /*  txUnits.setOnClickListener(new View.OnClickListener() {
+        etLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUnitsDialog();
+
             }
-        });*/
+        });
+
 
         txAgreeMentCondition.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,30 +112,5 @@ public class BloodRequestActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(currentDate.getTimeInMillis());
         datePickerDialog.show();
     }
-
-   /* private void showUnitsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.units_item_file, null);
-        LinearLayout unitsLayout = dialogView.findViewById(R.id.unitsLayout);
-        final AlertDialog dialog = builder.create();
-
-        unitsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String selectedData = ((TextView) ((LinearLayout) v).getChildAt(0)).getText().toString();
-
-                Log.d("Debug", "Selected Data: " + selectedData);
-                txUnits.setText(selectedData);
-                dialog.dismiss();
-            }
-        });
-
-        builder.setView(dialogView);
-        builder.setCancelable(false);
-        dialog.show();
-    }*/
-
-
-
 
 }

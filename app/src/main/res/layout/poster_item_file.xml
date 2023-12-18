@@ -10,106 +10,19 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:cardCornerRadius="10dp"
-        android:backgroundTint="@color/background"
         app:cardUseCompatPadding="true"
         app:cardElevation="@dimen/_3ssp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/_130sdp"
+            android:background="@drawable/poster_image_icon_first"
             android:weightSum="2">
-
-            <RelativeLayout
-                android:id="@+id/rl"
+            <ImageView
+                android:id="@+id/imgPoster"
+                android:scaleType="fitXY"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2">
-
-                <ImageView
-                    android:id="@+id/img"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:importantForAccessibility="no"
-                    android:padding="10dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/blood_donate_icon" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_123sdp"
-                android:layout_toEndOf="@id/img"
-                android:layout_weight="0.8"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingHorizontal="5dp"
-                    android:text="KR$ALL"
-                    android:fontFamily="@font/sofia_pro_semi_bold_italic"
-                    android:textColor="@color/newcolor"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:id="@+id/txBrand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sofia_pro_semi_bold"
-                    android:gravity="start"
-                    android:layout_marginTop="@dimen/_5ssp"
-                    android:maxLines="2"
-                    android:paddingHorizontal="@dimen/_3ssp"
-                    android:text="Your Favorite"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16ssp" />
-
-                <TextView
-                    android:id="@+id/txPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sofia_pro_semi_bold"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingHorizontal="5dp"
-                    android:layout_marginTop="-10sp"
-                    android:text="Local Shop Online"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16ssp" />
-
-                <TextView
-                    android:id="@+id/txPur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10ssp"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingHorizontal="@dimen/_3ssp"
-                    android:text="Groceries More delivered"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:id="@+id/txLoc"
-                    android:layout_width="@dimen/_80ssp"
-                    android:layout_height="@dimen/_22ssp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_7ssp"
-                    android:background="@drawable/shape_button_orange"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:paddingHorizontal="5dp"
-                    android:text="Download Now"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_10ssp" />
-
-
-
-            </LinearLayout>
-
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

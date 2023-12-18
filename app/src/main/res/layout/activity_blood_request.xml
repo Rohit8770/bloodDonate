@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/red"
+            android:background="@color/newBlue"
             android:layout_weight="3.7"
             android:orientation="horizontal">
 
@@ -113,7 +113,7 @@
                                 android:textColorHint="@color/black"
                                 app:hintAnimationEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
-                                app:hintTextColor="@color/red">
+                                app:hintTextColor="@color/newBlue">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/etNamePro1"
                                     android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                                 android:textColorHint="@color/black"
                                 app:hintAnimationEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
-                                app:hintTextColor="@color/red">
+                                app:hintTextColor="@color/newBlue">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -199,8 +199,9 @@
                         android:layout_height="@dimen/_40ssp"
                         android:background="@drawable/edittext_shape"
                         android:padding="@dimen/_10ssp"
-                        android:layout_margin="@dimen/_12ssp">
-                     <!-- <TextView
+                        android:layout_margin="@dimen/_12ssp"
+                        android:orientation="vertical">
+                  <!--    <TextView
                           android:id="@+id/txUnits"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
@@ -239,8 +240,9 @@
                                 android:textColorHint="@color/black"
                                 app:hintAnimationEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
-                                app:hintTextColor="@color/red">
+                                app:hintTextColor="@color/newBlue">
                                 <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etLocation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -268,7 +270,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/_3ssp"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/red"
+                    android:textColor="@color/newBlue"
                     android:fontFamily="@font/sofia_pro_regular" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
@@ -300,7 +302,7 @@
                                 android:textColorHint="@color/black"
                                 app:hintAnimationEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
-                                app:hintTextColor="@color/red">
+                                app:hintTextColor="@color/newBlue">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -342,7 +344,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/agreement"
-                        android:textColor="@color/red"
+                        android:textColor="@color/newBlue"
                         android:gravity="center"
                         android:textSize="@dimen/_12ssp"
                         android:fontFamily="@font/sofia_pro_regular"/>

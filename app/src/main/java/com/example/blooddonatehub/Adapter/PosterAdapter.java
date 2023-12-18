@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,20 +40,13 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterData
     public void onBindViewHolder(@NonNull PosterDataHolder holder, int position) {
         PosterDataModel posterDataModel=posterDataModelList.get(position);
 
-        holder.txName.setText(posterDataModel.getName());
-        holder.txBrand.setText(posterDataModel.getBrand());
-        holder.txPrice.setText(posterDataModel.getPrice());
-        holder.txPur.setText( posterDataModel.getPurchase_year());
-        holder.txLoc.setText(posterDataModel.getLocation());
-
-
 
         try {
             Glide.with(context)
                     .load(posterDataModelList.get(position).getImg())
                     .placeholder(R.drawable.person_24)
                     .error(R.drawable.ic_launcher_foreground)
-                    .into(holder.img);
+                    .into(holder.imgPoster);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,17 +59,11 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterData
     }
 
     public  class PosterDataHolder extends RecyclerView.ViewHolder {
-        TextView txName,txBrand,txPrice,txPur,txLoc;
-        ImageView img;
+
+        ImageView imgPoster;
        public PosterDataHolder(@NonNull View itemView) {
            super(itemView);
-
-           txName=itemView.findViewById(R.id.txName);
-           txBrand=itemView.findViewById(R.id.txBrand);
-           txPrice=itemView.findViewById(R.id.txPrice);
-           txPur=itemView.findViewById(R.id.txPur);
-           txLoc=itemView.findViewById(R.id.txLoc);
-           img=itemView.findViewById(R.id.img);
+           imgPoster=itemView.findViewById(R.id.imgPoster);
        }
    }
 }

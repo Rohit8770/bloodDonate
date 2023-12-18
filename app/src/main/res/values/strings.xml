@@ -7,6 +7,7 @@
     <string name="agreement">Terms of Use and Privacy Policy</string>
     <string name="agreerighttic">I have read and agreed to these</string>
     <string name="request_form">(Kindly fill the details correctly to help you better)</string>
+    <string name="poster">Thank you for registering with us</string>
 
 
     <style name="NoUnderlineEditTextStyle" parent="Widget.AppCompat.EditText">

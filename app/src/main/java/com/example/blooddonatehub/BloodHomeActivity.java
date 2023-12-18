@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.blooddonatehub.Adapter.PersonRelationAdapter;
 import com.example.blooddonatehub.Adapter.PosterAdapter;
@@ -26,9 +27,15 @@ public class BloodHomeActivity extends AppCompatActivity {
     CardView cardRequestBlood, cardDonateBlood, cardContributeBlood;
     RecyclerView rcvBloodGroup,rcvBloodType;
     PosterAdapter posterAdapter;
+    ImageView imgPoster;
     PersonRelationAdapter personRelationAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
     private int currentPosition = 0;
+
+
+   /* ImageView imgSteps;
+    int pos = 0;
+    private Runnable autoProgressRunnable;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,25 @@ public class BloodHomeActivity extends AppCompatActivity {
         cardContributeBlood = findViewById(R.id.cardContributeBlood);
         rcvBloodGroup = findViewById(R.id.rcvBloodGroup);
         rcvBloodType = findViewById(R.id.rcvBloodType);
+       // imgPoster = findViewById(R.id.imgPoster);
+
+
+     /*   imgSteps = findViewById(R.id.imgSteps);
+        updateImage();
+        autoProgressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                pos++;
+                if (pos > 6) {
+                    pos = 0;
+                }
+                updateImage();
+                handler.postDelayed(this, 5000);
+            }
+        };
+        handler.postDelayed(autoProgressRunnable, 5000);
+
+*/
 
         cardContributeBlood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +79,6 @@ public class BloodHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(BloodHomeActivity.this, DonateMargeActivity.class));
             }
         });
-
         cardRequestBlood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,12 +100,13 @@ public class BloodHomeActivity extends AppCompatActivity {
 
     private List<PosterDataModel> getMyData() {
         List<PosterDataModel> myDataModels = new ArrayList<>();
-        myDataModels.add(new PosterDataModel("KR$ALL", "Your Favorite", "Local Shop Online", "Groceries More delivered", "Download Now" , "https://st2.depositphotos.com/16122460/47721/i/600/depositphotos_477215468-stock-photo-courier-holding-box-assortment-exotic.jpg"));
-        myDataModels.add(new PosterDataModel("Blood_@G_15", "Local Shop Online", "Groceries More delivered", "Your Favorite", "Download Now" , "https://st2.depositphotos.com/1005233/8401/i/600/depositphotos_84010300-stock-photo-attractive-pharmacist-clean-the-store.jpg"));
-        myDataModels.add(new PosterDataModel("Donation_G#_15", "Your Favorite", "Local Shop Online", "Groceries More delivered", "Download Now", "https://static8.depositphotos.com/1031551/817/i/380/depositphotos_8175565-stock-photo-blood-from-the-blood-donation.jpg"));
-        myDataModels.add(new PosterDataModel("Blood_%G_15", "Local Shop Online", "Your Favorite", "Groceries More delivered", "Download Now", "https://st2.depositphotos.com/3591429/10776/i/380/depositphotos_107766826-stock-photo-diverse-people-holding-hands.jpg"));
-        myDataModels.add(new PosterDataModel("KR$ALL G7", "Your Favorite", "Local Shop Online", "Groceries More delivered", "Download Now" , "https://img.freepik.com/free-vector/flat-vertical-poster-template-world-blood-donor-day_23-2150334098.jpg?size=626&ext=jpg&ga=GA1.1.1458931086.1702550423&semt=ais"));
-        myDataModels.add(new PosterDataModel("Donation*_15", "Local Shop Online", "Your Favorite", "Groceries More delivered", "Download Now", "https://st2.depositphotos.com/1017986/8169/i/380/depositphotos_81693086-stock-photo-female-hands-holding-red-heart.jpg"));
+        myDataModels.add(new PosterDataModel( "https://i.postimg.cc/2Shdfsdk/My.jpg"));
+        myDataModels.add(new PosterDataModel( "https://i.postimg.cc/Y9Bq0cfb/landing-page-template-world-book-day-celebration-23-2150184554.jpg"));
+        myDataModels.add(new PosterDataModel("https://i.postimg.cc/YCq4Bmt8/1000-F-305868293-Yprj4a-HIGhlxkaw-Hovb-UE7y-K4-My-J1-LXP.jpg"));
+        myDataModels.add(new PosterDataModel( "https://i.postimg.cc/05nJQqcV/Connexia-firma-world-blood-donor-day-1170-jpg.webp"));
+        myDataModels.add(new PosterDataModel("https://i.postimg.cc/KjPFsFjC/grocery-shopping-1.webp"));
+     //   myDataModels.add(new PosterDataModel("KR$ALL G7", "Your Favorite", "Local Shop Online", "Groceries More delivered", "Download Now" , "https://img.freepik.com/free-vector/flat-vertical-poster-template-world-blood-donor-day_23-2150334098.jpg?size=626&ext=jpg&ga=GA1.1.1458931086.1702550423&semt=ais"));
+        myDataModels.add(new PosterDataModel("https://i.postimg.cc/Bnj9HhmD/Untitled-design-1-2-1.png"));
 
         return myDataModels;
     }
@@ -108,4 +134,29 @@ public class BloodHomeActivity extends AppCompatActivity {
             }
         }, 3000);
     }
+
+
+
+
+   /* protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(autoProgressRunnable);
+    }
+    void updateImage(){
+        if (pos == 0) {
+            imgSteps.setImageResource(R.drawable.poster_image_icon_first);
+        }if (pos == 1) {
+            imgSteps.setImageResource(R.drawable.poster_image_icon_second);
+        } else if (pos == 2) {
+            imgSteps.setImageResource(R.drawable.poster_image_icon_third);
+        } else if (pos == 3) {
+            imgSteps.setImageResource(R.drawable.poster_image_icon_five);
+        } else if (pos == 4) {
+            imgSteps.setImageResource(R.drawable.poster_image_icon_four);
+        } else if (pos == 5) {
+            imgSteps.setImageResource(R.drawable.hand_icon);
+        } *//*else if (pos == 6) {
+            imgSteps.setImageResource(R.drawable.blood_donate_icon);
+        }*//*
+    }*/
 }
