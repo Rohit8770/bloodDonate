@@ -27,7 +27,7 @@
                 android:layout_weight="1.6">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_75ssp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <ImageView

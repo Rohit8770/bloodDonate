@@ -6,9 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
 import com.example.blooddonatehub.Adapter.PosterAdapter;
@@ -23,17 +28,51 @@ import java.util.List;
 public class FirstDonateFragment extends Fragment {
     AllPersonRelationAdapter allPersonRelationAdapter;
     RecyclerView rcvBloodType;
+    EditText etSearch;
+    ImageView tvNoData;
+    TextView tvNoDataFound;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.fragment_first_donate, container, false);
+        View v = inflater.inflate(R.layout.fragment_first_donate, container, false);
 
-        rcvBloodType=v.findViewById(R.id.rcvBloodType);
+        rcvBloodType = v.findViewById(R.id.rcvBloodType);
+        etSearch = v.findViewById(R.id.etSearch);
+        tvNoData = v.findViewById(R.id.tvNoData);
+        tvNoDataFound = v.findViewById(R.id.tvNoDataFound);
+
+        tvNoDataFound.setVisibility(View.GONE);
+        tvNoData.setVisibility(View.GONE);
 
         rcvBloodType.setLayoutManager(new LinearLayoutManager(getContext()));
         allPersonRelationAdapter = new AllPersonRelationAdapter(getMyData(), getContext());
         rcvBloodType.setAdapter(allPersonRelationAdapter);
 
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (allPersonRelationAdapter != null) {
+                    allPersonRelationAdapter.Search(charSequence, rcvBloodType);
+                }
+                boolean isSearchResultsEmpty = allPersonRelationAdapter.isEmpty();
+                if (isSearchResultsEmpty) {
+                    tvNoDataFound.setVisibility(View.VISIBLE);
+                    tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    tvNoDataFound.setVisibility(View.GONE);
+                    tvNoData.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         return v;
     }

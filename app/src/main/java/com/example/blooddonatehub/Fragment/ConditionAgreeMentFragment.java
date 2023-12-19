@@ -49,7 +49,6 @@ public class ConditionAgreeMentFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-               // startActivity(new Intent(getContext(), DonateMargeActivity.class));
             }
         });
 

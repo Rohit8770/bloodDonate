@@ -38,8 +38,11 @@ public class SecondDonateFragment extends Fragment {
 
         rcvBloodType=v.findViewById(R.id.rcvBloodType);
         etSearchBloodGroup=v.findViewById(R.id.etSearchBloodGroup);
-      /*  tvNoData = v.findViewById(R.id.tvNoData);
-        tvNoDataFound = v.findViewById(R.id.tvNoDataFound);*/
+        tvNoData = v.findViewById(R.id.tvNoData);
+        tvNoDataFound = v.findViewById(R.id.tvNoDataFound);
+
+        tvNoDataFound.setVisibility(View.GONE);
+        tvNoData.setVisibility(View.GONE);
 
         rcvBloodType.setLayoutManager(new LinearLayoutManager(getContext()));
         allPersonRelationAdapter = new AllPersonRelationAdapter(getMyData(), getContext());
@@ -58,14 +61,14 @@ public class SecondDonateFragment extends Fragment {
                 if (allPersonRelationAdapter != null) {
                     allPersonRelationAdapter.Search(charSequence, rcvBloodType);
 
-                  /*  boolean isSearchResultsEmpty = allPersonRelationAdapter.isEmpty();
+                    boolean isSearchResultsEmpty = allPersonRelationAdapter.isEmpty();
                     if (isSearchResultsEmpty) {
                         tvNoDataFound.setVisibility(View.VISIBLE);
                         tvNoData.setVisibility(View.VISIBLE);
                     } else {
                         tvNoDataFound.setVisibility(View.GONE);
                         tvNoData.setVisibility(View.GONE);
-                    }*/
+                    }
                 }
             }
 

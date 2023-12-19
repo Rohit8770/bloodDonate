@@ -50,10 +50,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.3">
+            android:layout_weight="0.3"
+            android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="match_parent"
@@ -84,8 +85,44 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
 
-
         </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="@dimen/_5ssp"
+                    android:layout_margin="@dimen/_10ssp"
+                    app:cardCornerRadius="@dimen/_5ssp">
+                    <ImageView
+                        android:id="@+id/imgUpper"
+                        android:layout_width="@dimen/_40ssp"
+                        android:layout_height="@dimen/_40ssp"
+                        android:src="@drawable/less_expend"
+                        android:layout_marginRight="@dimen/_20ssp"
+                        android:layout_gravity="end"/>
+                <ImageView
+                    android:id="@+id/imgLower"
+                    android:layout_width="@dimen/_40ssp"
+                    android:layout_height="@dimen/_40ssp"
+                    android:src="@drawable/expend_more_icon"
+                    android:layout_marginRight="@dimen/_20ssp"
+                    android:layout_gravity="end"/>
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/txTheory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5ssp"
+                    android:text="Blood donation is a selfless act that plays a vital role in saving lives. By contributing blood, donors provide an essential resource for medical treatments,surgeries, and emergency situations. This altruistic tradition fosters a sense of community and shared responsibility."
+                    android:textSize="@dimen/_15ssp"/>
+            </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 

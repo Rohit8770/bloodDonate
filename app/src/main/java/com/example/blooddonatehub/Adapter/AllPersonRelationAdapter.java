@@ -68,7 +68,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             super(itemView);
 
 
-                txName=itemView.findViewById(R.id.txName);
+            txName=itemView.findViewById(R.id.txName);
             txCritical=itemView.findViewById(R.id.txCritical);
             txUnit=itemView.findViewById(R.id.txUnit);
             txLocation=itemView.findViewById(R.id.txLocation);
@@ -85,9 +85,14 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 categoryListRecyclerView.setVisibility(View.VISIBLE);
             } else {
                 List<AllPersonRelationDataModel> filterList = new ArrayList<>();
-                for (AllPersonRelationDataModel Row : allPersonRelationDataModelList) {
-                    if (Row.getBloodgroup().toLowerCase().contains(charString.toLowerCase())) {
-                        filterList.add(Row);
+                for (AllPersonRelationDataModel row : allPersonRelationDataModelList) {
+                    if (row.getName().toLowerCase().contains(charString) ||
+                            row.getLocation().toLowerCase().contains(charString) ||
+                            row.getUnit().toLowerCase().contains(charString) ||
+                            row.getBloodgroup().toLowerCase().contains(charString) ||
+                            row.getTime().toLowerCase().contains(charString) ||
+                            row.getCritical().toLowerCase().contains(charString)) {
+                        filterList.add(row);
                     }
                 }
                 searchList = new ArrayList<>(filterList);
@@ -103,5 +108,6 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             e.printStackTrace();
         }
     }
+
 
 }

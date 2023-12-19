@@ -1,5 +1,6 @@
 package com.example.blooddonatehub;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.blooddonatehub.Adapter.PersonRelationAdapter;
 import com.example.blooddonatehub.Adapter.PosterAdapter;
@@ -18,6 +20,7 @@ import com.example.blooddonatehub.Fragment.DonateMargeActivity;
 import com.example.blooddonatehub.Model.AllPersonRelationDataModel;
 import com.example.blooddonatehub.Model.PersonRelationDataModel;
 import com.example.blooddonatehub.Model.PosterDataModel;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,9 @@ public class BloodHomeActivity extends AppCompatActivity {
     PersonRelationAdapter personRelationAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
     private int currentPosition = 0;
-
+    private DotsIndicator dotsIndicator;
+    ImageView tvNoData;
+    TextView tvNoDataFound;
 
    /* ImageView imgSteps;
     int pos = 0;
@@ -48,24 +53,23 @@ public class BloodHomeActivity extends AppCompatActivity {
         rcvBloodGroup = findViewById(R.id.rcvBloodGroup);
         rcvBloodType = findViewById(R.id.rcvBloodType);
        // imgPoster = findViewById(R.id.imgPoster);
+     //   dotsIndicator = findViewById(R.id.dotsIndicator);
+        tvNoData = findViewById(R.id.tvNoData);
+        tvNoDataFound = findViewById(R.id.tvNoDataFound);
+
+        tvNoDataFound.setVisibility(View.GONE);
+        tvNoData.setVisibility(View.GONE);
 
 
-     /*   imgSteps = findViewById(R.id.imgSteps);
-        updateImage();
-        autoProgressRunnable = new Runnable() {
+
+        cardContributeBlood.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                pos++;
-                if (pos > 6) {
-                    pos = 0;
-                }
-                updateImage();
-                handler.postDelayed(this, 5000);
+            public void onClick(View v) {
+                startActivity(new Intent(BloodHomeActivity.this, ContributeActivity.class));
             }
-        };
-        handler.postDelayed(autoProgressRunnable, 5000);
+        });
 
-*/
+
 
         cardContributeBlood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +97,13 @@ public class BloodHomeActivity extends AppCompatActivity {
         rcvBloodGroup.setLayoutManager(new LinearLayoutManager(BloodHomeActivity.this,RecyclerView.HORIZONTAL,false));
         personRelationAdapter = new PersonRelationAdapter(getMyData1(),BloodHomeActivity.this);
         rcvBloodGroup.setAdapter(personRelationAdapter);
+        if (getMyData1().isEmpty()) {
+            tvNoDataFound.setVisibility(View.VISIBLE);
+            tvNoData.setVisibility(View.VISIBLE);
+        } else {
+            tvNoDataFound.setVisibility(View.GONE);
+            tvNoData.setVisibility(View.GONE);
+        }
 
         startAutoScroll();
 
@@ -124,16 +135,21 @@ public class BloodHomeActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (currentPosition < posterAdapter.getItemCount() - 1) {
+                int itemCount = posterAdapter.getItemCount();
+
+                if (currentPosition < itemCount - 1) {
                     currentPosition++;
                 } else {
                     currentPosition = 0;
                 }
+
                 rcvBloodType.smoothScrollToPosition(currentPosition);
-                handler.postDelayed(this, 3000); // 3000 milliseconds = 3 seconds
+                handler.postDelayed(this, 3000);
             }
         }, 3000);
     }
+
+
 
 
 
@@ -159,4 +175,20 @@ public class BloodHomeActivity extends AppCompatActivity {
             imgSteps.setImageResource(R.drawable.blood_donate_icon);
         }*//*
     }*/
+      /*   imgSteps = findViewById(R.id.imgSteps);
+        updateImage();
+        autoProgressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                pos++;
+                if (pos > 6) {
+                    pos = 0;
+                }
+                updateImage();
+                handler.postDelayed(this, 5000);
+            }
+        };
+        handler.postDelayed(autoProgressRunnable, 5000);
+
+*/
 }
