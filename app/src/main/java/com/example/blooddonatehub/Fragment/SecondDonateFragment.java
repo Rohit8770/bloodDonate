@@ -110,8 +110,7 @@ public class SecondDonateFragment extends Fragment {
                             @Override
                             public void run() {
                                 if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE))
-                                      /*  && bloodDonateListResponse.getGetBloodGroupList() != null &&
-                                        bloodDonateListResponse.getGetBloodGroupList().size() > 0)*/ {
+                                       {
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvBloodType.setLayoutManager(layoutManager);

@@ -3,6 +3,7 @@ package com.example.blooddonatehub.network;
 
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
+import com.example.blooddonatehub.Response.LocationListResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -29,6 +30,12 @@ public interface Restcall {
     @POST("blood_donorsapi/blood_donation_apis.php")
     Single<BloodDonateListResponse>GetallBloodgroups(
             @Field("tag") String tag);
+
+    @FormUrlEncoded
+    @POST("blood_donorsapi/blood_donation_apis.php")
+    Single<LocationListResponse>LocationCall(
+            @Field("tag") String tag,
+            @Field("area") String area);
 
 }
 

@@ -5,6 +5,7 @@ import static java.security.AccessController.getContext;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
+import com.example.blooddonatehub.Response.LocationListResponse;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
@@ -45,7 +47,7 @@ public class BloodRequestActivity extends AppCompatActivity {
 
 
     RelativeLayout txCalender;
-    TextView txSubmitRequest;
+    Button txSubmitRequest;
     TextView txDate,txAgreeMentCondition;
     ImageView imgBack;
     String bloodGroupSp="";
@@ -53,7 +55,7 @@ public class BloodRequestActivity extends AppCompatActivity {
     String bloodUnitsSp="";
     CheckBox checkBoxAgree;
     AppCompatSpinner bloodTypeSpinner,bloodGroupSpinner,bloodUnitSpinner;
-    MaterialSwitch switchCritical;
+    SwitchCompat switchCritical;
     TextInputEditText etName,etMobileNumber,etLocation,etDescription;
     Restcall restcall;
 
@@ -62,8 +64,6 @@ public class BloodRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_request);
-
-
 
         etName=findViewById(R.id.etName);
         etMobileNumber=findViewById(R.id.etMobileNumber);
@@ -82,39 +82,33 @@ public class BloodRequestActivity extends AppCompatActivity {
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
 
+        etLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationCall();
+            }
+        });
+
         bloodGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                bloodGroupSp = parent.getSelectedItem().toString();
-            }
-
+                bloodGroupSp = parent.getSelectedItem().toString();}
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {}});
 
-            }
-        });
         bloodTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                bloodTypeSp = parent.getSelectedItem().toString();
-            }
+                bloodTypeSp = parent.getSelectedItem().toString();}
+        @Override
+            public void onNothingSelected(AdapterView<?> parent) {}});
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         bloodUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                bloodUnitsSp = parent.getSelectedItem().toString();
-            }
-
+                bloodUnitsSp = parent.getSelectedItem().toString();}
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
 
@@ -137,7 +131,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                 String bloodUnit = bloodUnitSpinner.getSelectedItem().toString().trim();
                 boolean checkBoxChecked = checkBoxAgree.isChecked();
 
-                boolean isValid = true;
 
                 if (name.isEmpty()) {
                     etName.setError("Name is required");
@@ -179,7 +172,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                 fragmentFilter.setCancelable(false);
             }
         });
-
 
     }
 
@@ -234,9 +226,44 @@ public class BloodRequestActivity extends AppCompatActivity {
                 });
     }
 
+    private void LocationCall() {
 
+        restcall.LocationCall("search_pincode",etLocation.getText().toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<LocationListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                                Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onNext(LocationListResponse locationListResponse) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
+                                  && locationListResponse.getPincodes() != null && locationListResponse.getPincodes().size() > 0){
+
+                                    etLocation.setText("");
+
+                                }
+                                Toast.makeText(BloodRequestActivity.this, locationListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+    }
 
     private void showDatePickerDialog() {
         Calendar currentDate = Calendar.getInstance();

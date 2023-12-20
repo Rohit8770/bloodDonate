@@ -277,7 +277,7 @@
                     android:textColor="@color/newBlue"
                     android:fontFamily="@font/sofia_pro_regular" />
 
-                <com.google.android.material.materialswitch.MaterialSwitch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchCritical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -285,7 +285,7 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:gravity="end"
-                    app:thumbTint="@color/black"
+                    app:thumbTint="@color/newBlue"
                     android:outlineAmbientShadowColor="@color/white"/>
             </LinearLayout>
 
@@ -314,6 +314,7 @@
                                     android:layout_gravity="center"
                                     android:gravity="left"
                                     android:hint=""
+
                                     android:inputType="textCapWords"
                                     android:maxLength="200"
                                     android:textColor="@color/black"
@@ -331,6 +332,7 @@
 
                         <CheckBox
                             android:id="@+id/checkBoxAgree"
+                            android:backgroundTint="@color/newBlue"
                             android:layout_width="35dp"
                             android:layout_height="wrap_content"
                             android:button="@drawable/check_box" />
@@ -354,22 +356,25 @@
                         android:textSize="@dimen/_12ssp"
                         android:fontFamily="@font/sofia_pro_regular"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_20ssp">
-                    <TextView
+
+                        <Button
+                            android:id="@+id/txSubmitRequest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/newBlue"
+                            android:layout_marginBottom="@dimen/_8ssp"
+                            android:text="Send Request"/>
+                   <!-- <TextView
                         android:id="@+id/txSubmitRequest"
                         android:layout_width="@dimen/_120sdp"
                         android:layout_height="@dimen/_35ssp"
                         android:gravity="center"
-                        android:background="@drawable/submit_button_shape"
                         android:text="Send Request"
                         android:layout_marginRight="@dimen/_10ssp"
                         android:textSize="@dimen/_15ssp"
-                        android:textColor="@color/new_white"/>
-                    </LinearLayout>
+                        android:textColor="@color/new_white"/>-->
+
 
                 </LinearLayout>
             </ScrollView>
