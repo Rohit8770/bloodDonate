@@ -50,6 +50,7 @@ public class SecondDonateFragment extends Fragment {
         tvNoDataFound.setVisibility(View.GONE);
         tvNoData.setVisibility(View.GONE);
 
+        GetallBloodgroupCall();
 
         etSearchBloodGroup.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,7 +83,7 @@ public class SecondDonateFragment extends Fragment {
         return v;
     }
 
-    private void Blood_donation() {
+    private void GetallBloodgroupCall() {
 
         restcall.GetallBloodgroups("getallBloodgroups")
                 .subscribeOn(Schedulers.io())
@@ -124,6 +125,4 @@ public class SecondDonateFragment extends Fragment {
                     }
                 });
     }
-
-
 }
