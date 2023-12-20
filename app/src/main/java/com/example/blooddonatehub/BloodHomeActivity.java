@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,10 +31,11 @@ public class BloodHomeActivity extends AppCompatActivity {
     CardView cardRequestBlood, cardDonateBlood, cardContributeBlood;
     RecyclerView rcvBloodGroup,rcvBloodType;
     PosterAdapter posterAdapter;
+    boolean flag = true;
     ImageView imgPoster;
     PersonRelationAdapter personRelationAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
-    private int currentPosition = 0;
+    private int currentPosition = 1;
     private DotsIndicator dotsIndicator;
     ImageView tvNoData;
     TextView tvNoDataFound;
@@ -131,6 +133,7 @@ public class BloodHomeActivity extends AppCompatActivity {
         return personRelationDataModelList;
     }
 
+
     private void startAutoScroll() {
         handler.postDelayed(new Runnable() {
             @Override
@@ -140,10 +143,7 @@ public class BloodHomeActivity extends AppCompatActivity {
                 if (currentPosition < itemCount - 1) {
                     currentPosition++;
                 } else {
-                    if (currentPosition > 1) {
-                        currentPosition--;
-                        // currentPosition = 0;
-                    }
+                    currentPosition = 0;
                 }
 
                 rcvBloodType.smoothScrollToPosition(currentPosition);
@@ -151,6 +151,37 @@ public class BloodHomeActivity extends AppCompatActivity {
             }
         }, 3000);
     }
+
+
+   /* private void startAutoScroll() {
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int itemCount = posterAdapter.getItemCount();
+
+                if (flag){
+                    if (currentPosition < itemCount) {
+                        currentPosition++;
+                    } else {
+                        currentPosition--;
+                        flag = false;
+                    }
+
+                }
+                else {
+                    if (itemCount > 1) {
+                        currentPosition--;
+                    } else {
+                        currentPosition++;
+                        flag = true;
+                    }
+                }
+                rcvBloodType.smoothScrollToPosition(currentPosition);
+                handler.postDelayed(this, 3000);
+            }
+        }, 3000);
+    }*/
 
 
 

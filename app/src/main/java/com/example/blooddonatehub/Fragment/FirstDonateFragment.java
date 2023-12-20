@@ -45,8 +45,8 @@ public class FirstDonateFragment extends Fragment {
         tvNoData.setVisibility(View.GONE);
 
         rcvBloodType.setLayoutManager(new LinearLayoutManager(getContext()));
-        allPersonRelationAdapter = new AllPersonRelationAdapter(getMyData(), getContext());
-        rcvBloodType.setAdapter(allPersonRelationAdapter);
+//        allPersonRelationAdapter = new AllPersonRelationAdapter(getMyData(), getContext());
+       // rcvBloodType.setAdapter(allPersonRelationAdapter);
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override

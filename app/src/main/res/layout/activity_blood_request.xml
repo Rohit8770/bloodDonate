@@ -308,6 +308,7 @@
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
                                 app:hintTextColor="@color/newBlue">
                                 <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etDescription"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"

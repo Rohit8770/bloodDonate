@@ -16,6 +16,7 @@ import com.example.blooddonatehub.Model.AllPersonRelationDataModel;
 import com.example.blooddonatehub.Model.PersonRelationDataModel;
 import com.example.blooddonatehub.Model.PosterDataModel;
 import com.example.blooddonatehub.R;
+import com.example.blooddonatehub.Response.BloodDonateListResponse;
 import com.example.blooddonatehub.Utils.SharedPreference;
 import com.example.blooddonatehub.Utils.VariableBag;
 
@@ -23,16 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRelationAdapter.AllPersonViewHolder>{
-    List<AllPersonRelationDataModel> allPersonRelationDataModelList;
-    List<AllPersonRelationDataModel> searchList;
     Context context;
-    SharedPreference sharedPreference;
+    List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList;
+    List<BloodDonateListResponse.GetBloodGroup> searchList;
 
-    public AllPersonRelationAdapter(List<AllPersonRelationDataModel> allPersonRelationDataModelList, Context context) {
-        this.allPersonRelationDataModelList = allPersonRelationDataModelList;
-        this.searchList =new ArrayList<>(allPersonRelationDataModelList);
+    public AllPersonRelationAdapter(Context context, List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList) {
         this.context = context;
+        this.bloodDonateListResponseList = bloodDonateListResponseList;
+        this.searchList = new ArrayList<>(bloodDonateListResponseList);
     }
+
     public boolean isEmpty() {
         return getItemCount() == 0;
     }
@@ -47,14 +48,14 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
 
     @Override
     public void onBindViewHolder(@NonNull AllPersonViewHolder holder, int position) {
-        AllPersonRelationDataModel allPersonRelationDataModel=searchList.get(position);
+        BloodDonateListResponse.GetBloodGroup bloodGroup=searchList.get(position);
 
-        holder.txName.setText(allPersonRelationDataModel.getName());
-        holder.txUnit.setText(allPersonRelationDataModel.getUnit());
-        holder.txtime.setText(allPersonRelationDataModel.getTime());
-        holder.txLocation.setText( allPersonRelationDataModel.getLocation());
-        holder.txCritical.setText(allPersonRelationDataModel.getCritical());
-        holder.txBloodGroup.setText(allPersonRelationDataModel.getBloodgroup());
+        holder.txName.setText(bloodGroup.getPatientFullName());
+        holder.txUnit.setText(bloodGroup.getSelectUnits());
+        holder.txtime.setText(bloodGroup.getDate());
+        holder.txLocation.setText( bloodGroup.getLocation());
+        holder.txCritical.setText(bloodGroup.getCriticalSituation());
+        holder.txBloodGroup.setText(bloodGroup.getBloodGroup());
 
         holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,17 +109,17 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
         try {
             String charString = charSequence.toString().toLowerCase().trim();
             if (charString.isEmpty()) {
-                searchList = new ArrayList<>(allPersonRelationDataModelList);
+                searchList = new ArrayList<>(bloodDonateListResponseList);
                 categoryListRecyclerView.setVisibility(View.VISIBLE);
             } else {
-                List<AllPersonRelationDataModel> filterList = new ArrayList<>();
-                for (AllPersonRelationDataModel row : allPersonRelationDataModelList) {
-                    if (row.getName().toLowerCase().contains(charString) ||
+                List<BloodDonateListResponse.GetBloodGroup> filterList = new ArrayList<>();
+                for (BloodDonateListResponse.GetBloodGroup row : bloodDonateListResponseList) {
+                    if (row.getPatientFullName().toLowerCase().contains(charString) ||
                             row.getLocation().toLowerCase().contains(charString) ||
-                            row.getUnit().toLowerCase().contains(charString) ||
-                            row.getBloodgroup().toLowerCase().contains(charString) ||
-                            row.getTime().toLowerCase().contains(charString) ||
-                            row.getCritical().toLowerCase().contains(charString)) {
+                            row.getSelectUnits().toLowerCase().contains(charString) ||
+                            row.getBloodGroup().toLowerCase().contains(charString) ||
+                            row.getDate().toLowerCase().contains(charString) ||
+                            row.getBloodGroup().toLowerCase().contains(charString)) {
                         filterList.add(row);
                     }
                 }

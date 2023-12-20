@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -25,6 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
+import com.example.blooddonatehub.Response.BloodRequestListResponse;
+import com.example.blooddonatehub.Utils.VariableBag;
+import com.example.blooddonatehub.network.RestClient;
+import com.example.blooddonatehub.network.Restcall;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -33,6 +38,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
+
 public class BloodRequestActivity extends AppCompatActivity {
 
 
@@ -40,10 +48,16 @@ public class BloodRequestActivity extends AppCompatActivity {
     TextView txSubmitRequest;
     TextView txDate,txAgreeMentCondition;
     ImageView imgBack;
+    String bloodGroupSp="";
+    String bloodTypeSp="";
+    String bloodUnitsSp="";
     CheckBox checkBoxAgree;
     AppCompatSpinner bloodTypeSpinner,bloodGroupSpinner,bloodUnitSpinner;
     MaterialSwitch switchCritical;
-    TextInputEditText etName,etMobileNumber,etLocation;
+    TextInputEditText etName,etMobileNumber,etLocation,etDescription;
+    Restcall restcall;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +74,48 @@ public class BloodRequestActivity extends AppCompatActivity {
         checkBoxAgree=findViewById(R.id.checkBoxAgree);
         bloodTypeSpinner=findViewById(R.id.bloodTypeSpinner);
         bloodGroupSpinner=findViewById(R.id.bloodGroupSpinner);
+        etDescription=findViewById(R.id.etDescription);
         bloodUnitSpinner=findViewById(R.id.bloodUnitSpinner);
         switchCritical=findViewById(R.id.switchCritical);
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
+        restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
+
+        bloodGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                bloodGroupSp = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        bloodTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                bloodTypeSp = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        bloodUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                bloodUnitsSp = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
 
@@ -106,7 +157,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                 } else if (!checkBoxChecked) {
                     Toast.makeText(BloodRequestActivity.this, "Please agree to the terms and conditions", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(BloodRequestActivity.this, "Request Send Successfully", Toast.LENGTH_SHORT).show();
+                    RequestForBloodCall();
                 }
 
             }
@@ -121,7 +172,6 @@ public class BloodRequestActivity extends AppCompatActivity {
         txAgreeMentCondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // showAgreementDialog();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ConditionAgreeMentFragment fragmentFilter = new ConditionAgreeMentFragment();
@@ -131,9 +181,62 @@ public class BloodRequestActivity extends AppCompatActivity {
         });
 
 
-
-
     }
+
+
+    private void RequestForBloodCall() {
+
+        restcall.CallRequestForBlood("blood_donation",bloodTypeSp,bloodGroupSp,
+                 etName.getText().toString(),
+                        etMobileNumber.getText().toString(),
+                        txDate.getText().toString(),
+                        bloodUnitsSp,switchCritical.getText().toString(),
+                        etDescription.getText().toString(),
+                        etLocation.getText().toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<BloodRequestListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                                Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onNext(BloodRequestListResponse bloodRequestListResponse) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (bloodRequestListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)){
+                                    etName.setText("");
+                                    etDescription.setText("");
+                                    etLocation.setText("");
+                                    etMobileNumber.setText("");
+                                    checkBoxAgree.setText("");
+                                    txDate.setText("");
+                                    switchCritical.setText("");
+
+
+                                }
+                                Toast.makeText(BloodRequestActivity.this, bloodRequestListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+    }
+
+
+
+
 
     private void showDatePickerDialog() {
         Calendar currentDate = Calendar.getInstance();
