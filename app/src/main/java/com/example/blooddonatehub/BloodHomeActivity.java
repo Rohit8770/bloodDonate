@@ -140,7 +140,10 @@ public class BloodHomeActivity extends AppCompatActivity {
                 if (currentPosition < itemCount - 1) {
                     currentPosition++;
                 } else {
-                    currentPosition = 0;
+                    if (currentPosition > 1) {
+                        currentPosition--;
+                        // currentPosition = 0;
+                    }
                 }
 
                 rcvBloodType.smoothScrollToPosition(currentPosition);
@@ -154,41 +157,4 @@ public class BloodHomeActivity extends AppCompatActivity {
 
 
 
-   /* protected void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacks(autoProgressRunnable);
-    }
-    void updateImage(){
-        if (pos == 0) {
-            imgSteps.setImageResource(R.drawable.poster_image_icon_first);
-        }if (pos == 1) {
-            imgSteps.setImageResource(R.drawable.poster_image_icon_second);
-        } else if (pos == 2) {
-            imgSteps.setImageResource(R.drawable.poster_image_icon_third);
-        } else if (pos == 3) {
-            imgSteps.setImageResource(R.drawable.poster_image_icon_five);
-        } else if (pos == 4) {
-            imgSteps.setImageResource(R.drawable.poster_image_icon_four);
-        } else if (pos == 5) {
-            imgSteps.setImageResource(R.drawable.hand_icon);
-        } *//*else if (pos == 6) {
-            imgSteps.setImageResource(R.drawable.blood_donate_icon);
-        }*//*
-    }*/
-      /*   imgSteps = findViewById(R.id.imgSteps);
-        updateImage();
-        autoProgressRunnable = new Runnable() {
-            @Override
-            public void run() {
-                pos++;
-                if (pos > 6) {
-                    pos = 0;
-                }
-                updateImage();
-                handler.postDelayed(this, 5000);
-            }
-        };
-        handler.postDelayed(autoProgressRunnable, 5000);
-
-*/
 }

@@ -90,37 +90,43 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardElevation="@dimen/_5ssp"
-                    android:layout_margin="@dimen/_10ssp"
-                    app:cardCornerRadius="@dimen/_5ssp">
-                    <ImageView
-                        android:id="@+id/imgUpper"
-                        android:layout_width="@dimen/_40ssp"
-                        android:layout_height="@dimen/_40ssp"
-                        android:src="@drawable/less_expend"
-                        android:layout_marginRight="@dimen/_20ssp"
-                        android:layout_gravity="end"/>
-                <ImageView
-                    android:id="@+id/imgLower"
-                    android:layout_width="@dimen/_40ssp"
-                    android:layout_height="@dimen/_40ssp"
-                    android:src="@drawable/expend_more_icon"
-                    android:layout_marginRight="@dimen/_20ssp"
-                    android:layout_gravity="end"/>
-                </androidx.cardview.widget.CardView>
+                android:orientation="vertical"
+                android:layout_margin="5sp">
                 <TextView
                     android:id="@+id/txTheory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_5ssp"
-                    android:text="Blood donation is a selfless act that plays a vital role in saving lives. By contributing blood, donors provide an essential resource for medical treatments,surgeries, and emergency situations. This altruistic tradition fosters a sense of community and shared responsibility."
-                    android:textSize="@dimen/_15ssp"/>
+                    android:textSize="@dimen/_13ssp"/>
             </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/_5ssp"
+                app:cardCornerRadius="@dimen/_20ssp"
+                android:layout_marginRight="@dimen/_10ssp"
+                android:layout_marginLeft="@dimen/_10ssp">
+            <LinearLayout
+                android:id="@+id/lytQ1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:layout_gravity="end"
+                android:gravity="end">
+
+
+                <ImageView
+                    android:id="@+id/imgUpDown1"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/expend_more_icon" />
+
+            </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
 
 
         </LinearLayout>

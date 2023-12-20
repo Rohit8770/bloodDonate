@@ -6,37 +6,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ContributeActivity extends AppCompatActivity {
-    ImageView imgBack,imgLower,imgUpper;
+    ImageView imgBack,imgUpDown1;
     TextView txTheory;
+
+    LinearLayout lytQ1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contribute);
 
-        imgBack=findViewById(R.id.imgBack);
-        imgLower=findViewById(R.id.imgLower);
-        txTheory=findViewById(R.id.txTheory);
-        imgUpper=findViewById(R.id.imgUpper);
+        imgBack = findViewById(R.id.imgBack);
+        txTheory = findViewById(R.id.txTheory);
+        lytQ1 = findViewById(R.id.lytQ1);
+        imgUpDown1 = findViewById(R.id.imgUpDown1);
 
-        imgLower.setVisibility(View.GONE);
         txTheory.setVisibility(View.GONE);
-        imgUpper.setOnClickListener(new View.OnClickListener() {
+
+        lytQ1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imgLower.setVisibility(View.VISIBLE);
-                if (txTheory.getVisibility() == View.VISIBLE) {
-                    txTheory.setVisibility(View.GONE);
-                    imgLower.setVisibility(View.GONE);
-                    imgUpper.setVisibility(View.VISIBLE);
-                } else {
-                    txTheory.setVisibility(View.VISIBLE);
-                }
+                onClickData(v);
             }
         });
-
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,5 +39,22 @@ public class ContributeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+    boolean hideShow;
+    public void onClickData(View view) {
+        if (!hideShow) {
+            txTheory.setText("You can create a Reservation by Selecting Create a New Reservation. " +
+                    "Select Desired Date and time Slot and Check the Availability for the rooms and " +
+                    "Select any from the Room List.");
+            txTheory.setVisibility(View.VISIBLE);
+            hideShow = true;
+            imgUpDown1.setImageResource(R.drawable.expend_more_icon);
+        } else {
+            txTheory.setVisibility(View.GONE);
+            hideShow = false;
+            imgUpDown1.setImageResource(R.drawable.less_expend);
+        }
     }
 }
+

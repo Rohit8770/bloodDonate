@@ -1,6 +1,7 @@
 package com.example.blooddonatehub.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.example.blooddonatehub.Model.AllPersonRelationDataModel;
 import com.example.blooddonatehub.Model.PersonRelationDataModel;
 import com.example.blooddonatehub.Model.PosterDataModel;
 import com.example.blooddonatehub.R;
+import com.example.blooddonatehub.Utils.SharedPreference;
+import com.example.blooddonatehub.Utils.VariableBag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
     List<AllPersonRelationDataModel> allPersonRelationDataModelList;
     List<AllPersonRelationDataModel> searchList;
     Context context;
+    SharedPreference sharedPreference;
 
     public AllPersonRelationAdapter(List<AllPersonRelationDataModel> allPersonRelationDataModelList, Context context) {
         this.allPersonRelationDataModelList = allPersonRelationDataModelList;
@@ -52,6 +56,27 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
         holder.txCritical.setText(allPersonRelationDataModel.getCritical());
         holder.txBloodGroup.setText(allPersonRelationDataModel.getBloodgroup());
 
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+
+                // Concatenate the details into a single string
+                String message = "My Details\n\n"
+                        + "Name: " + holder.txName.getText().toString() + "\n"
+                        + "Location: " + holder.txLocation.getText().toString() + "\n"
+                        + "Blood Group: " + holder.txBloodGroup.getText().toString() + "\n"
+                        + "Units: " + holder.txUnit.getText().toString() + "\n"
+                        + "Date: " + holder.txtime.getText().toString();
+
+                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, "Share details using");
+                context.startActivity(shareIntent);
+            }
+        });
+
 
     }
 
@@ -63,6 +88,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
     public  class AllPersonViewHolder extends RecyclerView.ViewHolder {
 
         TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup;
+        ImageView imgShare;
 
         public AllPersonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +100,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             txLocation=itemView.findViewById(R.id.txLocation);
             txtime=itemView.findViewById(R.id.txTime);
             txBloodGroup=itemView.findViewById(R.id.txBloodGroup);
+            imgShare=itemView.findViewById(R.id.imgShare);
         }
     }
 
