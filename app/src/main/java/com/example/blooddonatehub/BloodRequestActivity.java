@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -47,6 +48,7 @@ public class BloodRequestActivity extends AppCompatActivity {
 
 
     RelativeLayout txCalender;
+    RecyclerView txLocationSuggest;
     Button txSubmitRequest;
     TextView txDate,txAgreeMentCondition;
     ImageView imgBack;
@@ -79,12 +81,15 @@ public class BloodRequestActivity extends AppCompatActivity {
         switchCritical=findViewById(R.id.switchCritical);
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
+        txLocationSuggest=findViewById(R.id.txLocationSuggest);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
+        txLocationSuggest.setVisibility(View.GONE);
 
         etLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txLocationSuggest.setVisibility(View.VISIBLE);
                 LocationCall();
             }
         });
@@ -132,20 +137,26 @@ public class BloodRequestActivity extends AppCompatActivity {
                 boolean checkBoxChecked = checkBoxAgree.isChecked();
 
 
-                if (name.isEmpty()) {
+                if (bloodType.equals("Select_Blood_Type")) {
+                    Toast.makeText(BloodRequestActivity.this, "Please select blood Type", Toast.LENGTH_SHORT).show();
+
+                }  else if (bloodGroup.equals("Select_Blood_Group")) {
+                    Toast.makeText(BloodRequestActivity.this, "Please select blood group", Toast.LENGTH_SHORT).show();
+
+                } else if (name.isEmpty()) {
                     etName.setError("Name is required");
-                }else if (mobileNumber.isEmpty()) {
+
+                } else if (mobileNumber.isEmpty()) {
                     etMobileNumber.setError("Mobile number is required");
-                }else if (date.isEmpty()) {
-                    txDate.setError("Date is required");
+
+                } else if (date.equals("Select Date")) {
+                    Toast.makeText(BloodRequestActivity.this, "Please select date", Toast.LENGTH_SHORT).show();
+
+                } else if (bloodUnit.equals("Select_Units")) {
+                    Toast.makeText(BloodRequestActivity.this, "Please select blood units", Toast.LENGTH_SHORT).show();
+
                 } else if (location.isEmpty()) {
                     etLocation.setError("Location is required");
-                }
-                else if (bloodType.isEmpty()) {
-
-                } else if (bloodGroup.equals("Select Blood Group")) {
-
-                }else if (bloodUnit.equals("Select Blood Unit")) {
 
                 } else if (!checkBoxChecked) {
                     Toast.makeText(BloodRequestActivity.this, "Please agree to the terms and conditions", Toast.LENGTH_SHORT).show();
@@ -182,7 +193,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                  etName.getText().toString(),
                         etMobileNumber.getText().toString(),
                         txDate.getText().toString(),
-                        bloodUnitsSp,switchCritical.getText().toString(),
+                        bloodUnitsSp,  switchCritical.isChecked() ? "Critical" : "Not Critical",
                         etDescription.getText().toString(),
                         etLocation.getText().toString())
                 .subscribeOn(Schedulers.io())
@@ -246,7 +257,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onNext(LocationListResponse locationListResponse) {
                         runOnUiThread(new Runnable() {
@@ -254,11 +264,10 @@ public class BloodRequestActivity extends AppCompatActivity {
                             public void run() {
                                 if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
                                   && locationListResponse.getPincodes() != null && locationListResponse.getPincodes().size() > 0){
-
-                                    etLocation.setText("");
+                            //        txLocationSuggest.setText("");
 
                                 }
-                                Toast.makeText(BloodRequestActivity.this, locationListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

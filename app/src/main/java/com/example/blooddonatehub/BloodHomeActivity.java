@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.blooddonatehub.Adapter.PersonRelationAdapter;
@@ -39,6 +40,7 @@ public class BloodHomeActivity extends AppCompatActivity {
     private DotsIndicator dotsIndicator;
     ImageView tvNoData;
     TextView tvNoDataFound;
+    LinearLayout indicatorLayout;
 
    /* ImageView imgSteps;
     int pos = 0;
@@ -54,13 +56,13 @@ public class BloodHomeActivity extends AppCompatActivity {
         cardContributeBlood = findViewById(R.id.cardContributeBlood);
         rcvBloodGroup = findViewById(R.id.rcvBloodGroup);
         rcvBloodType = findViewById(R.id.rcvBloodType);
-       // imgPoster = findViewById(R.id.imgPoster);
-     //   dotsIndicator = findViewById(R.id.dotsIndicator);
         tvNoData = findViewById(R.id.tvNoData);
         tvNoDataFound = findViewById(R.id.tvNoDataFound);
+        indicatorLayout = findViewById(R.id.indicator_layout);
 
         tvNoDataFound.setVisibility(View.GONE);
         tvNoData.setVisibility(View.GONE);
+
 
 
 
@@ -125,7 +127,7 @@ public class BloodHomeActivity extends AppCompatActivity {
     }
     private List<PersonRelationDataModel> getMyData1() {
         List<PersonRelationDataModel> personRelationDataModelList = new ArrayList<>();
-        personRelationDataModelList.add(new PersonRelationDataModel("Rohit Malviya","4 unit","Sarkej ahemdabad near by thaltej metro station (India)","monday nov 5","Critical","A+"));
+        personRelationDataModelList.add(new PersonRelationDataModel("Rohit Malviya","4","Sarkej ahemdabad near by thaltej metro station (India)","monday nov 5","Critical","A+"));
         personRelationDataModelList.add(new PersonRelationDataModel("Gourav Sharma","2 unit","Sarkej ahemdabad near by thaltej metro station (India)","wednesday feb 1","Critical","B+"));
         personRelationDataModelList.add(new PersonRelationDataModel("Vishal Raghuwanshi","6 unit","Sarkej ahemdabad near by thaltej metro station (India)","monday jan 8","No","AB+"));
         personRelationDataModelList.add(new PersonRelationDataModel("Anand Patel","1 unit","Sarkej ahemdabad near by thaltej metro station (India)","saturday july 22","Critical","O-"));

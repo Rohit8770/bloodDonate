@@ -180,6 +180,16 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/indicator_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/newBlue"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_15ssp"/>
+
+
            <!-- <androidx.viewpager.widget.ViewPager
                 android:id="@+id/onboardingPager"
                 android:layout_width="match_parent"

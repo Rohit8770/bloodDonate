@@ -13,7 +13,7 @@ public class ContributeActivity extends AppCompatActivity {
     ImageView imgBack,imgUpDown1;
     TextView txTheory;
 
-    LinearLayout lytQ1;
+    LinearLayout clickLy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +21,12 @@ public class ContributeActivity extends AppCompatActivity {
 
         imgBack = findViewById(R.id.imgBack);
         txTheory = findViewById(R.id.txTheory);
-        lytQ1 = findViewById(R.id.lytQ1);
+        clickLy = findViewById(R.id.clickLy);
         imgUpDown1 = findViewById(R.id.imgUpDown1);
 
         txTheory.setVisibility(View.GONE);
 
-        lytQ1.setOnClickListener(new View.OnClickListener() {
+        clickLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickData(v);
@@ -44,9 +44,10 @@ public class ContributeActivity extends AppCompatActivity {
     boolean hideShow;
     public void onClickData(View view) {
         if (!hideShow) {
-            txTheory.setText("You can create a Reservation by Selecting Create a New Reservation. " +
-                    "Select Desired Date and time Slot and Check the Availability for the rooms and " +
-                    "Select any from the Room List.");
+            txTheory.setText("\n" +
+                    "Blood donation and financial contributions are vital for healthcare." +
+                    " Donating blood saves lives, while monetary support fuels research and facilities." +
+                    " Your generosity contributes to a healthier community and supports medical advancements.");
             txTheory.setVisibility(View.VISIBLE);
             hideShow = true;
             imgUpDown1.setImageResource(R.drawable.expend_more_icon);

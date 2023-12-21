@@ -34,17 +34,17 @@
                         android:id="@+id/img"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:importantForAccessibility="no"
-                        android:padding="10dp"
+                        android:padding="@dimen/_7ssp"
+                        android:layout_marginBottom="@dimen/_15ssp"
                         android:src="@drawable/blood_drop" />
 
                     <TextView
                         android:id="@+id/txBloodGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:text="B+"
-                        android:layout_marginRight="@dimen/_5ssp"
+                        android:padding="@dimen/_10ssp"
+                        android:layout_centerInParent="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11ssp"
                         android:textStyle="bold" />
@@ -91,7 +91,7 @@
                         android:gravity="start"
                         android:maxLines="1"
                         android:paddingHorizontal="5dp"
-                        android:text="6 Units"
+                        android:text="6"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
 
@@ -103,8 +103,7 @@
                         android:fontFamily="@font/sofia_pro_medium"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:paddingHorizontal="5dp"
-                        android:text="(Blood)"
+                        android:text="units (Blood)"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>

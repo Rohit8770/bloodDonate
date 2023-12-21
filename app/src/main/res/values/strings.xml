@@ -31,7 +31,7 @@
         <item>AB-</item>
         <item>O+</item>
         <item>O-</item>
-        <item>A1+</item>
+        <item>A1+</item>~
         <item>A1-</item>
         <item>A2+</item>
         <item>A2-</item>
@@ -39,10 +39,6 @@
         <item>A1B-</item>
         <item>A2B+</item>
         <item>A2B-</item>
-        <item>Bombay Blood Group</item>
-        <item>INRA</item>
-        <item>Dont Know</item>
-
     </string-array>
 
     <string-array name="Blood_Unit">

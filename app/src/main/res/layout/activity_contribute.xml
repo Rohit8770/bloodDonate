@@ -108,7 +108,7 @@
                 android:layout_marginRight="@dimen/_10ssp"
                 android:layout_marginLeft="@dimen/_10ssp">
             <LinearLayout
-                android:id="@+id/lytQ1"
+                android:id="@+id/clickLy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

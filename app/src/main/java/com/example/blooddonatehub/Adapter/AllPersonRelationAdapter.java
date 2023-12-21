@@ -63,8 +63,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
 
-                // Concatenate the details into a single string
-                String message = "My Details\n\n"
+                String message = "Users Details for blood\n"
                         + "Name: " + holder.txName.getText().toString() + "\n"
                         + "Location: " + holder.txLocation.getText().toString() + "\n"
                         + "Blood Group: " + holder.txBloodGroup.getText().toString() + "\n"
@@ -77,7 +76,6 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 context.startActivity(shareIntent);
             }
         });
-
 
     }
 
