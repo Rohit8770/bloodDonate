@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -16,8 +17,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -27,6 +30,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
+import com.example.blooddonatehub.Adapter.LocationAdapter;
 import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
 import com.example.blooddonatehub.Response.LocationListResponse;
@@ -38,7 +43,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import rx.Subscriber;
@@ -48,18 +55,21 @@ public class BloodRequestActivity extends AppCompatActivity {
 
 
     RelativeLayout txCalender;
-    RecyclerView txLocationSuggest;
     Button txSubmitRequest;
     TextView txDate,txAgreeMentCondition;
     ImageView imgBack;
     String bloodGroupSp="";
     String bloodTypeSp="";
     String bloodUnitsSp="";
+    String spinnerData="";
     CheckBox checkBoxAgree;
-    AppCompatSpinner bloodTypeSpinner,bloodGroupSpinner,bloodUnitSpinner;
+    AppCompatSpinner bloodTypeSpinner,bloodGroupSpinner,bloodUnitSpinner,spinnerLocationSuggest;
     SwitchCompat switchCritical;
     TextInputEditText etName,etMobileNumber,etLocation,etDescription;
     Restcall restcall;
+    LocationAdapter locationAdapter;
+    RecyclerView rcvLocation;
+    AppCompatSpinner spinnerLocation;
 
 
     @Override
@@ -81,26 +91,39 @@ public class BloodRequestActivity extends AppCompatActivity {
         switchCritical=findViewById(R.id.switchCritical);
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
-        txLocationSuggest=findViewById(R.id.txLocationSuggest);
+        rcvLocation=findViewById(R.id.rcvLocation);
+        // spinnerLocation=findViewById(R.id.spinnerLocation);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
-        txLocationSuggest.setVisibility(View.GONE);
 
-        etLocation.setOnClickListener(new View.OnClickListener() {
+
+        etLocation.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View v) {
-                txLocationSuggest.setVisibility(View.VISIBLE);
-                LocationCall();
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    LocationCall();
+                    return true;
+                }
+                return false;
             }
         });
+
+/*        spinnerLocationSuggest.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerData = parent.getSelectedItem().toString();}
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}});*/
 
         bloodGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                bloodGroupSp = parent.getSelectedItem().toString();}
+                bloodGroupSp = parent.getSelectedItem().toString();
+            }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}});
-
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         bloodTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -162,8 +185,8 @@ public class BloodRequestActivity extends AppCompatActivity {
                     Toast.makeText(BloodRequestActivity.this, "Please agree to the terms and conditions", Toast.LENGTH_SHORT).show();
                 }else {
                     RequestForBloodCall();
+                    finish();
                 }
-
             }
         });
 
@@ -183,9 +206,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                 fragmentFilter.setCancelable(false);
             }
         });
-
     }
-
 
     private void RequestForBloodCall() {
 
@@ -213,7 +234,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onNext(BloodRequestListResponse bloodRequestListResponse) {
                         runOnUiThread(new Runnable() {
@@ -236,6 +256,54 @@ public class BloodRequestActivity extends AppCompatActivity {
                     }
                 });
     }
+
+  /*  private void LocationCall() {
+        restcall.LocationCall("search_pincode", etLocation.getText().toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<LocationListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                                Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onNext(LocationListResponse locationListResponse) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
+                                        && locationListResponse.getPincodes() != null
+                                        && locationListResponse.getPincodes().size() > 0) {
+
+                                    // Initialize the locationAdapter
+                                    locationAdapter = new LocationAdapter(BloodRequestActivity.this, locationListResponse.getPincodes());
+
+                                    // Assuming LocationAdapter has a method getLocationList() to get the list of locations
+                                    List<String> locationStrings = locationAdapter.getLocationList();
+
+                                    // Create an ArrayAdapter using the location list
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationStrings);
+                                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    spinnerLocation.setAdapter(adapter);
+
+                                    Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+    }*/
 
     private void LocationCall() {
 
@@ -263,11 +331,30 @@ public class BloodRequestActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
-                                  && locationListResponse.getPincodes() != null && locationListResponse.getPincodes().size() > 0){
-                            //        txLocationSuggest.setText("");
+                                  && locationListResponse.getAreaResponseList() != null && locationListResponse.getAreaResponseList().size() > 0) {
 
-                                }
-                                Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
+                                    rcvLocation.setVisibility(View.VISIBLE);
+
+                                    LinearLayoutManager layoutManager = new LinearLayoutManager(BloodRequestActivity.this, RecyclerView.VERTICAL, false);
+                                    rcvLocation.setLayoutManager(layoutManager);
+                                    locationAdapter = new LocationAdapter(BloodRequestActivity.this, locationListResponse.getAreaResponseList());
+                                    rcvLocation.setAdapter(locationAdapter);
+
+                                    locationAdapter.SetUpInterFace(new LocationAdapter.LocationClick() {
+                                        @Override
+                                        public void SetLocation(LocationListResponse.AreaResponse category) {
+                                            etLocation.setText(category.getAreaName() +category.getCity() +category.getState() +category.getPincode());
+                                            rcvLocation.setVisibility(View.GONE);
+                                        }
+                                    });
+
+
+                                   /* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
+                                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    spinnerLocationSuggest.setAdapter(adapter);
+                                    spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*/
+
+                                }Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -295,5 +382,4 @@ public class BloodRequestActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(currentDate.getTimeInMillis());
         datePickerDialog.show();
     }
-
 }

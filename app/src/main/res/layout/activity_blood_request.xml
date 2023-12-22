@@ -111,7 +111,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:baselineAligned="false"
-                                android:hint="Patient First Full Name"
+                                android:hint="Patient Full Name"
                                 android:textColorHint="@color/black"
                                 app:hintAnimationEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Caption"
@@ -229,13 +229,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="6.0sp">
+<!--
                             <ImageView
                                 android:layout_width="25sp"
                                 android:layout_height="@dimen/_40ssp"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
                                 android:layout_marginRight="@dimen/_25ssp"
                                 android:src="@drawable/location"/>
+-->
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -258,11 +259,12 @@
                                     android:textSize="15sp"
                                     tools:ignore="InvalidId" />
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/txLocationSuggest"
+                                    android:id="@+id/rcvLocation"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="match_parent"/>
                             </com.google.android.material.textfield.TextInputLayout>
-                        </RelativeLayout>
+
+                           </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout

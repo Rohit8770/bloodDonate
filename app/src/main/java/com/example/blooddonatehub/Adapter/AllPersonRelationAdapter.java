@@ -1,24 +1,23 @@
 package com.example.blooddonatehub.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.blooddonatehub.Model.AllPersonRelationDataModel;
-import com.example.blooddonatehub.Model.PersonRelationDataModel;
-import com.example.blooddonatehub.Model.PosterDataModel;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
-import com.example.blooddonatehub.Utils.SharedPreference;
-import com.example.blooddonatehub.Utils.VariableBag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +56,15 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
         holder.txCritical.setText(bloodGroup.getCriticalSituation());
         holder.txBloodGroup.setText(bloodGroup.getBloodGroup());
 
+        holder.btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAcceptDialog();
+                holder.ivFollowed.setVisibility(View.VISIBLE);
+                holder.btnAccept.setVisibility(View.GONE);
+            }
+        });
+
         holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +95,8 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
     public  class AllPersonViewHolder extends RecyclerView.ViewHolder {
 
         TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup;
-        ImageView imgShare;
+        ImageView imgShare,ivFollowed;
+        TextView btnAccept;
 
         public AllPersonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +109,9 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             txtime=itemView.findViewById(R.id.txTime);
             txBloodGroup=itemView.findViewById(R.id.txBloodGroup);
             imgShare=itemView.findViewById(R.id.imgShare);
+            btnAccept=itemView.findViewById(R.id.btnAccept);
+            ivFollowed=itemView.findViewById(R.id.ivFollowed);
+            ivFollowed.setVisibility(View.GONE);
         }
     }
 
@@ -134,6 +146,22 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             e.printStackTrace();
         }
     }
+
+    private void openAcceptDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thank you for Accepting");
+        builder.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 
 
 }

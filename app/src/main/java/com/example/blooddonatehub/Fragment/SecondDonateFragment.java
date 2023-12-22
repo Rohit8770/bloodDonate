@@ -39,7 +39,6 @@ public class SecondDonateFragment extends Fragment {
     ImageView tvNoData;
     TextView tvNoDataFound;
     Restcall restcall;
-    SwipeRefreshLayout swipe;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,22 +48,14 @@ public class SecondDonateFragment extends Fragment {
         etSearchBloodGroup=v.findViewById(R.id.etSearchBloodGroup);
         tvNoData = v.findViewById(R.id.tvNoData);
         tvNoDataFound = v.findViewById(R.id.tvNoDataFound);
-        swipe=v.findViewById(R.id.swipe);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
 
-        tvNoDataFound.setVisibility(View.GONE);
-        tvNoData.setVisibility(View.GONE);
+      /*  tvNoDataFound.setVisibility(View.GONE);
+        tvNoData.setVisibility(View.GONE);*/
 
+        GetallBloodgroupCall();
 
-       // GetallBloodgroupCall();
-
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GetallBloodgroupCall();
-            }
-        });
 
         etSearchBloodGroup.addTextChangedListener(new TextWatcher() {
             @Override
@@ -125,13 +116,21 @@ public class SecondDonateFragment extends Fragment {
                             public void run() {
                                 if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE))
                                        {
+                                           rcvBloodType.setVisibility(View.VISIBLE);
+                                           tvNoData.setVisibility(View.GONE);
+                                           tvNoDataFound.setVisibility(View.GONE);
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvBloodType.setLayoutManager(layoutManager);
                                     allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), bloodDonateListResponse.getGetBloodGroupList());
                                     rcvBloodType.setAdapter(allPersonRelationAdapter);
 
-                                }
+                                } else {
+                                    rcvBloodType.setVisibility(View.GONE);
+                                tvNoData.setVisibility(View.VISIBLE);
+                                tvNoData.setVisibility(View.VISIBLE);
+                                tvNoDataFound.setVisibility(View.VISIBLE);
+                            }
                                 Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });

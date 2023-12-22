@@ -18,10 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
-import com.example.blooddonatehub.Adapter.PosterAdapter;
-import com.example.blooddonatehub.BloodHomeActivity;
-import com.example.blooddonatehub.Model.AllPersonRelationDataModel;
-import com.example.blooddonatehub.Model.PosterDataModel;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
 import com.example.blooddonatehub.Utils.VariableBag;
@@ -53,17 +49,15 @@ public class FirstDonateFragment extends Fragment {
         tvNoDataFound = v.findViewById(R.id.tvNoDataFound);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
-        tvNoDataFound.setVisibility(View.GONE);
-        tvNoData.setVisibility(View.GONE);
+      /*  tvNoDataFound.setVisibility(View.GONE);
+        tvNoData.setVisibility(View.GONE);*/
 
         GetallBloodgroupCall();
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -134,15 +128,14 @@ public class FirstDonateFragment extends Fragment {
                             @Override
                             public void run() {
                                 if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
-                                    // Filter the data for blood group B+
-                                    List<BloodDonateListResponse.GetBloodGroup> filteredList = filterData(bloodDonateListResponse.getGetBloodGroupList(), "A+");
+
+                                     List<BloodDonateListResponse.GetBloodGroup> filteredList = filterData(bloodDonateListResponse.getGetBloodGroupList(), "A+");
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvBloodType.setLayoutManager(layoutManager);
                                     allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), filteredList);
                                     rcvBloodType.setAdapter(allPersonRelationAdapter);
 
-                                    // Check if the filtered list is empty and show/hide the appropriate views
                                     if (filteredList.isEmpty()) {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
                                         tvNoData.setVisibility(View.VISIBLE);
@@ -156,8 +149,7 @@ public class FirstDonateFragment extends Fragment {
                         });
                     }
 
-                    // Method to filter data based on blood group
-                    private List<BloodDonateListResponse.GetBloodGroup> filterData(List<BloodDonateListResponse.GetBloodGroup> dataList, String bloodGroup) {
+                   private List<BloodDonateListResponse.GetBloodGroup> filterData(List<BloodDonateListResponse.GetBloodGroup> dataList, String bloodGroup) {
                         List<BloodDonateListResponse.GetBloodGroup> filteredList = new ArrayList<>();
                         for (BloodDonateListResponse.GetBloodGroup item : dataList) {
                             if (item.getBloodGroup().equalsIgnoreCase(bloodGroup)) {

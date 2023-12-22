@@ -12,4 +12,8 @@
     <color name="red">#B30742</color>
     <color name="blue1">#5F3A85</color>
 
+    //indicator color
+    <color name="inactive">#C4C4C4</color>
+    <color name="active">#2ba8e0</color>
+
 </resources>

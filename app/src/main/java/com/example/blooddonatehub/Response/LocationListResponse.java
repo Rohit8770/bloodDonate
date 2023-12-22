@@ -13,7 +13,7 @@ public class LocationListResponse implements Serializable
 
     @SerializedName("pincodes")
     @Expose
-    private List<Pincode> pincodes;
+    private List<AreaResponse> areaResponseList;
     @SerializedName("message")
     @Expose
     private String message;
@@ -26,19 +26,18 @@ public class LocationListResponse implements Serializable
     }
 
 
-    public LocationListResponse(List<Pincode> pincodes, String message, String status) {
-        super();
-        this.pincodes = pincodes;
+    public LocationListResponse(List<AreaResponse> areaResponseList, String message, String status) {
+        this.areaResponseList = areaResponseList;
         this.message = message;
         this.status = status;
     }
 
-    public List<Pincode> getPincodes() {
-        return pincodes;
+    public List<AreaResponse> getAreaResponseList() {
+        return areaResponseList;
     }
 
-    public void setPincodes(List<Pincode> pincodes) {
-        this.pincodes = pincodes;
+    public void setAreaResponseList(List<AreaResponse> areaResponseList) {
+        this.areaResponseList = areaResponseList;
     }
 
     public String getMessage() {
@@ -59,7 +58,7 @@ public class LocationListResponse implements Serializable
 
 
 @Generated("jsonschema2pojo")
-public class Pincode implements Serializable {
+public class AreaResponse implements Serializable {
 
     @SerializedName("area_id")
     @Expose
@@ -78,11 +77,11 @@ public class Pincode implements Serializable {
     private String state;
     private final static long serialVersionUID = -1378811111924816030L;
 
-    public Pincode() {
+    public AreaResponse() {
     }
 
 
-    public Pincode(String areaId, String areaName, String pincode, String city, String state) {
+    public AreaResponse(String areaId, String areaName, String pincode, String city, String state) {
         super();
         this.areaId = areaId;
         this.areaName = areaName;

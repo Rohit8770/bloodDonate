@@ -163,16 +163,39 @@
                         android:layout_height="@dimen/_40ssp"
                         android:layout_gravity="end"
                         android:gravity="end">
+
+                       <!-- <Button
+                            android:id="@+id/btnAccept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30ssp"
+                            android:text="Accept"
+                            android:textSize="@dimen/_11ssp"
+                            android:backgroundTint="@color/newBlue"
+                            android:layout_marginRight="@dimen/_10ssp"/>-->
+                        <RelativeLayout
+                            android:layout_width="@dimen/_60ssp"
+                            android:layout_height="@dimen/_20ssp"
+                            android:layout_marginRight="@dimen/_10ssp"
+                            android:layout_gravity="center"
+                            >
+                        <ImageView
+                            android:id="@+id/ivFollowed"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_shape"
+                            android:src="@drawable/followed"
+                            />
                    <TextView
-                       android:layout_width="@dimen/_60ssp"
-                       android:layout_height="@dimen/_20ssp"
-                       android:layout_gravity="center"
+                       android:id="@+id/btnAccept"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="Accept"
                        android:gravity="center"
                        android:background="@drawable/shape_button"
-                       android:text="Accept"
-                       android:layout_marginRight="@dimen/_10ssp"
                        android:textSize="@dimen/_14ssp"
                        android:textColor="@color/white"/>
+
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
 
