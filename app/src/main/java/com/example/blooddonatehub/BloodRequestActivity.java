@@ -16,6 +16,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
 import com.example.blooddonatehub.Adapter.LocationAdapter;
 import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
+import com.example.blooddonatehub.Fragment.LocationFragment;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
 import com.example.blooddonatehub.Response.LocationListResponse;
 import com.example.blooddonatehub.Utils.VariableBag;
@@ -56,7 +59,7 @@ public class BloodRequestActivity extends AppCompatActivity {
 
     RelativeLayout txCalender;
     Button txSubmitRequest;
-    TextView txDate,txAgreeMentCondition;
+    TextView txDate,txAgreeMentCondition,etLocation;
     ImageView imgBack;
     String bloodGroupSp="";
     String bloodTypeSp="";
@@ -65,7 +68,7 @@ public class BloodRequestActivity extends AppCompatActivity {
     CheckBox checkBoxAgree;
     AppCompatSpinner bloodTypeSpinner,bloodGroupSpinner,bloodUnitSpinner,spinnerLocationSuggest;
     SwitchCompat switchCritical;
-    TextInputEditText etName,etMobileNumber,etLocation,etDescription;
+    TextInputEditText etName,etMobileNumber,etDescription;
     Restcall restcall;
     LocationAdapter locationAdapter;
     RecyclerView rcvLocation;
@@ -97,14 +100,41 @@ public class BloodRequestActivity extends AppCompatActivity {
 
 
 
-        etLocation.setOnKeyListener(new View.OnKeyListener() {
+      /*  etLocation.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().length()>=3){
                     LocationCall();
-                    return true;
                 }
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
+
+        etLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                LocationFragment locationFragment = new LocationFragment();
+                locationFragment.show(fragmentTransaction, "#tag");
+                locationFragment.setCancelable(false);
+
+                locationFragment.setupInterface(new LocationFragment.DataClick() {
+                    @Override
+                    public void dataClick(String data) {
+                        etLocation.setText(data);
+                    }
+                });
             }
         });
 
@@ -305,7 +335,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                 });
     }*/
 
-    private void LocationCall() {
+   /* private void LocationCall() {
 
         restcall.LocationCall("search_pincode",etLocation.getText().toString())
                 .subscribeOn(Schedulers.io())
@@ -314,7 +344,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         runOnUiThread(new Runnable() {
@@ -342,24 +371,23 @@ public class BloodRequestActivity extends AppCompatActivity {
 
                                     locationAdapter.SetUpInterFace(new LocationAdapter.LocationClick() {
                                         @Override
-                                        public void SetLocation(LocationListResponse.AreaResponse category) {
-                                            etLocation.setText(category.getAreaName() +category.getCity() +category.getState() +category.getPincode());
+                                        public void SetLocation(LocationListResponse.AreaResponse listLocation) {
+                                            etLocation.setText(listLocation.getAreaName()+ " " +listLocation.getCity()+ " "  +listLocation.getState() + " " +listLocation.getPincode());
                                             rcvLocation.setVisibility(View.GONE);
+
                                         }
                                     });
-
-
-                                   /* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
+                                   *//* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
                                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     spinnerLocationSuggest.setAdapter(adapter);
-                                    spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*/
+                                    spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*//*
 
-                                }Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
+                                }//Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
-    }
+    }*/
 
     private void showDatePickerDialog() {
         Calendar currentDate = Calendar.getInstance();

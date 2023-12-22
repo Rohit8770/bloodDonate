@@ -71,7 +71,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
 
-                String message = "Users Details for blood\n"
+                String message = "Users Details for blood donation :\n\n"
                         + "Name: " + holder.txName.getText().toString() + "\n"
                         + "Location: " + holder.txLocation.getText().toString() + "\n"
                         + "Blood Group: " + holder.txBloodGroup.getText().toString() + "\n"

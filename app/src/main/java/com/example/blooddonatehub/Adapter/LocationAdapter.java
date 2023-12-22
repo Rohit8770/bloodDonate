@@ -56,14 +56,16 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
         LocationListResponse.AreaResponse areaResponse=areaResponseList.get(position);
 
-        holder.txArea.setText(areaResponse.getAreaName() + areaResponse.getCity() + areaResponse.getState() + areaResponse.getPincode());
-//        holder.txState.setText(pincode.getState());
-//        holder.txCity.setText(pincode.getCity());
-//        holder.txPincode.setText(pincode.getPincode());
+        holder.txArea.setText(areaResponse.getAreaName() + " " + areaResponse.getCity() + " " + areaResponse.getState() + " " + areaResponse.getPincode());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        /*holder.txState.setText(pincode.getState());
+        holder.txCity.setText(pincode.getCity());
+        holder.txPincode.setText(pincode.getPincode());*/
+
+        holder.txArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
+
                 locationClick.SetLocation(areaResponseList.get(position));
             }
         });
@@ -80,9 +82,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             super(itemView);
 
             txArea=itemView.findViewById(R.id.txArea);
-            txState=itemView.findViewById(R.id.txState);
+        /*    txState=itemView.findViewById(R.id.txState);
             txCity=itemView.findViewById(R.id.txCity);
-            txPincode=itemView.findViewById(R.id.txPincode);
+            txPincode=itemView.findViewById(R.id.txPincode);*/
         }
     }
 }

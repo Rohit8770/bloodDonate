@@ -66,9 +66,9 @@ public class AreaResponse implements Serializable {
     @SerializedName("area_name")
     @Expose
     private String areaName;
-    @SerializedName("pincode")
+    @SerializedName("pincodes")
     @Expose
-    private String pincode;
+    private String pincodes;
     @SerializedName("city")
     @Expose
     private String city;
@@ -81,11 +81,11 @@ public class AreaResponse implements Serializable {
     }
 
 
-    public AreaResponse(String areaId, String areaName, String pincode, String city, String state) {
+    public AreaResponse(String areaId, String areaName, String pincodes, String city, String state) {
         super();
         this.areaId = areaId;
         this.areaName = areaName;
-        this.pincode = pincode;
+        this.pincodes = pincodes;
         this.city = city;
         this.state = state;
     }
@@ -107,11 +107,11 @@ public class AreaResponse implements Serializable {
     }
 
     public String getPincode() {
-        return pincode;
+        return pincodes;
     }
 
     public void setPincode(String pincode) {
-        this.pincode = pincode;
+        this.pincodes = pincode;
     }
 
     public String getCity() {

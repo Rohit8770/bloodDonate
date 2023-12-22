@@ -227,8 +227,17 @@
                         android:layout_margin="@dimen/_8ssp">
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="6.0sp">
+                            android:layout_height="@dimen/_40ssp"
+                            android:layout_marginHorizontal="6.0sp"
+                            android:background="@drawable/edittext_shape">
+                            <TextView
+                                android:id="@+id/etLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_10ssp"
+                                android:text="Please select location"
+                                android:fontFamily="@font/sofia_pro_regular"
+                                android:textSize="@dimen/_14ssp"/>
 <!--
                             <ImageView
                                 android:layout_width="25sp"
@@ -236,8 +245,10 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginRight="@dimen/_25ssp"
                                 android:src="@drawable/location"/>
+
+
 -->
-                            <com.google.android.material.textfield.TextInputLayout
+                            <!--<com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:baselineAligned="false"
@@ -257,12 +268,12 @@
                                     android:maxLength="200"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
-                                    tools:ignore="InvalidId" />
+                                    tools:ignore="InvalidId" />-->
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/rcvLocation"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"/>
-                            </com.google.android.material.textfield.TextInputLayout>
+                      <!--      </com.google.android.material.textfield.TextInputLayout>-->
 
                            </RelativeLayout>
                     </LinearLayout>
