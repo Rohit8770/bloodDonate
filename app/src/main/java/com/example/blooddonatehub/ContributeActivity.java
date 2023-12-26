@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.blooddonatehub.Utils.Tools;
+
 public class ContributeActivity extends AppCompatActivity {
     ImageView imgBack,imgUpDown1;
     TextView txTheory;
-
+    Tools tools;
     LinearLayout clickLy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,8 @@ public class ContributeActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
         txTheory = findViewById(R.id.txTheory);
         clickLy = findViewById(R.id.clickLy);
+        tools=new Tools(this);
+        tools.ScreenshotBlock(getWindow());
         imgUpDown1 = findViewById(R.id.imgUpDown1);
 
         txTheory.setVisibility(View.GONE);

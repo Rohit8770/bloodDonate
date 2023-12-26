@@ -20,6 +20,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     Context context;
 
    List<LocationListResponse.AreaResponse> areaResponseList;
+   List<LocationListResponse.AreaResponse> searchList;
 
     LocationClick locationClick;
 
@@ -34,8 +35,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public LocationAdapter(Context context, List<LocationListResponse.AreaResponse> areaResponseList) {
         this.context = context;
         this.areaResponseList = areaResponseList;
+        this.searchList = new ArrayList<>(areaResponseList);
     }
 
+    public boolean isEmpty() {
+        return getItemCount() == 0;
+    }
 
 /*    public List<String> getLocationList() {
         List<String> locations = new ArrayList<>();
@@ -54,7 +59,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     @Override
     public void onBindViewHolder(@NonNull LocationViewHolder holder, int position) {
-        LocationListResponse.AreaResponse areaResponse=areaResponseList.get(position);
+        LocationListResponse.AreaResponse areaResponse=searchList.get(position);
 
         holder.txArea.setText(areaResponse.getAreaName() + " " + areaResponse.getCity() + " " + areaResponse.getState() + " " + areaResponse.getPincode());
 
@@ -73,7 +78,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     @Override
     public int getItemCount() {
-        return areaResponseList.size();
+        return searchList.size();
     }
 
     public class LocationViewHolder extends RecyclerView.ViewHolder {
@@ -87,4 +92,32 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             txPincode=itemView.findViewById(R.id.txPincode);*/
         }
     }
+
+    public void Search(CharSequence charSequence, RecyclerView categoryListRecyclerView) {
+        try {
+            String charString = charSequence.toString().toLowerCase().trim();
+            if (charString.isEmpty()) {
+                searchList = new ArrayList<>(areaResponseList);
+                categoryListRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                List<LocationListResponse.AreaResponse> filterList = new ArrayList<>();
+                for (LocationListResponse.AreaResponse Row : areaResponseList) {
+                    if (Row.getAreaName().toLowerCase().contains(charString.toLowerCase())) {
+                        filterList.add(Row);
+                    }
+                }
+                searchList = new ArrayList<>(filterList);
+
+                if (searchList.isEmpty()) {
+                    categoryListRecyclerView.setVisibility(View.GONE);
+                } else {
+                    categoryListRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+            notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

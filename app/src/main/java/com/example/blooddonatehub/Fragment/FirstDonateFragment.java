@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
+import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
@@ -38,6 +39,7 @@ public class FirstDonateFragment extends Fragment {
     TextView tvNoDataFound;
     Restcall restcall;
     String bg;
+    Tools tools;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class FirstDonateFragment extends Fragment {
         etSearch = v.findViewById(R.id.etSearch);
         tvNoData = v.findViewById(R.id.tvNoData);
         tvNoDataFound = v.findViewById(R.id.tvNoDataFound);
+        tools=new Tools(getContext());
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
       /*  tvNoDataFound.setVisibility(View.GONE);
@@ -82,7 +85,7 @@ public class FirstDonateFragment extends Fragment {
     }
 
     private void GetallBloodgroupCall() {
-
+        tools.showLoading();
         restcall.GetallBloodgroups("getallBloodgroups")
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
@@ -96,6 +99,7 @@ public class FirstDonateFragment extends Fragment {
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
                                 Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
@@ -127,6 +131,7 @@ public class FirstDonateFragment extends Fragment {
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
 
                                      List<BloodDonateListResponse.GetBloodGroup> filteredList = filterData(bloodDonateListResponse.getGetBloodGroupList(), "A+");

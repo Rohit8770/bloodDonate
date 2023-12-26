@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.example.blooddonatehub.BloodHomeActivity;
 import com.example.blooddonatehub.R;
+import com.example.blooddonatehub.Utils.Tools;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -23,7 +24,7 @@ public class DonateMargeActivity extends AppCompatActivity {
     ViewPager2 view;
     FirstDonateFragment firstFragment;
     SecondDonateFragment secondFragment;
-
+    Tools tools;
     ImageView imgBack;
 
     @Override
@@ -36,6 +37,8 @@ public class DonateMargeActivity extends AppCompatActivity {
         imgBack=findViewById(R.id.imgBack);
         firstFragment=new FirstDonateFragment();
         secondFragment=new SecondDonateFragment();
+        tools=new Tools(this);
+        tools.ScreenshotBlock(getWindow());
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

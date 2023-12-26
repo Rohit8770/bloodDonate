@@ -24,6 +24,7 @@ import com.example.blooddonatehub.Adapter.ViewPagerAdapter;
 import com.example.blooddonatehub.Fragment.DonateMargeActivity;
 import com.example.blooddonatehub.Model.PosterDataModel;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
+import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
@@ -50,7 +51,7 @@ public class BloodHomeActivity extends AppCompatActivity {
     TextView tvNoDataFound;
     LinearLayout indicatorLayout;
     Restcall restcall;
-
+    Tools tools;
 
     ViewPager mSLideViewPager;
     LinearLayout mDotLayout;
@@ -91,7 +92,10 @@ public class BloodHomeActivity extends AppCompatActivity {
         cardDonateBlood = findViewById(R.id.cardDonateBlood);
         cardContributeBlood = findViewById(R.id.cardContributeBlood);
         rcvBloodGroup = findViewById(R.id.rcvBloodGroup);
-      //  rcvBloodType = findViewById(R.id.rcvBloodType);
+        tools=new Tools(this);
+        tools.ScreenshotBlock(getWindow());
+
+        //  rcvBloodType = findViewById(R.id.rcvBloodType);
         tvNoData = findViewById(R.id.tvNoData);
         tvNoDataFound = findViewById(R.id.tvNoDataFound);
         indicatorLayout = findViewById(R.id.indicator_layout);
@@ -160,7 +164,7 @@ public class BloodHomeActivity extends AppCompatActivity {
     }*/
 
     private void GetallBloodgroupCall() {
-
+        tools.showLoading();
         restcall.GetallBloodgroups("getallBloodgroups")
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
@@ -174,6 +178,7 @@ public class BloodHomeActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
                                 Toast.makeText(BloodHomeActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                             }
@@ -184,6 +189,7 @@ public class BloodHomeActivity extends AppCompatActivity {
                        runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
 
                                     List<BloodDonateListResponse.GetBloodGroup> filteredList = filterData(bloodDonateListResponse.getGetBloodGroupList(), "A+");

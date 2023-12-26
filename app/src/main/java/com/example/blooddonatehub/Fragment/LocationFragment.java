@@ -19,12 +19,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonatehub.Adapter.LocationAdapter;
 import com.example.blooddonatehub.BloodRequestActivity;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.LocationListResponse;
+import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
@@ -38,12 +40,12 @@ public class LocationFragment extends DialogFragment {
     ImageView imgClose;
     RecyclerView rcvLocationFragment;
     EditText etSearchLocation;
-
     Restcall restcall;
     LocationAdapter locationAdapter;
     Button btnDoneLocation;
-
-
+    Tools tools;
+    ImageView tvNoData;
+    TextView tvNoDataFound;
 
     DataClick dataClick;
     public interface DataClick{
@@ -69,9 +71,12 @@ public class LocationFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.fragment_location, container, false);
 
+        tools=new Tools(getContext());
         imgClose=view.findViewById(R.id.imgClose);
         rcvLocationFragment=view.findViewById(R.id.rcvLocationFragment);
         etSearchLocation=view.findViewById(R.id.etSearchLocation);
+        tvNoData = view.findViewById(R.id.tvNoData);
+        tvNoDataFound = view.findViewById(R.id.tvNoDataFound);
      //   btnDoneLocation=view.findViewById(R.id.btnDoneLocation);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
@@ -99,10 +104,18 @@ public class LocationFragment extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (locationAdapter != null) {
+                    locationAdapter.Search(s, rcvLocationFragment);
 
-               /* if(s.toString().length()>=3){
-
-                }*/
+                    boolean isSearchResultsEmpty = locationAdapter.isEmpty();
+                    if (isSearchResultsEmpty) {
+                        tvNoDataFound.setVisibility(View.VISIBLE);
+                        tvNoData.setVisibility(View.VISIBLE);
+                    } else {
+                        tvNoDataFound.setVisibility(View.GONE);
+                        tvNoData.setVisibility(View.GONE);
+                    }
+                }
             }
 
             @Override
@@ -116,7 +129,8 @@ public class LocationFragment extends DialogFragment {
     }
 
     private void LocationCall() {
-        String location="AHN";
+        tools.showLoading();
+        String location="Ahe";
 
         restcall.LocationCall("search_pincode",location)
                 .subscribeOn(Schedulers.io())
@@ -130,6 +144,7 @@ public class LocationFragment extends DialogFragment {
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
                                 Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
@@ -140,10 +155,15 @@ public class LocationFragment extends DialogFragment {
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
                                         && locationListResponse.getAreaResponseList() != null && locationListResponse.getAreaResponseList().size() > 0) {
 
                                   //  rcvLocationFragment.setVisibility(View.VISIBLE);
+
+                                    rcvLocationFragment.setVisibility(View.VISIBLE);
+                                    tvNoData.setVisibility(View.GONE);
+                                    tvNoDataFound.setVisibility(View.GONE);
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvLocationFragment.setLayoutManager(layoutManager);
@@ -159,15 +179,20 @@ public class LocationFragment extends DialogFragment {
                                             if (dataClick != null) {
                                                 dataClick.dataClick(etSearchLocation.getText().toString());
                                                 dismiss();
-
                                             }
                                         }
                                     });
+
                                    /* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
                                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     spinnerLocationSuggest.setAdapter(adapter);
                                     spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*/
 
+                                }
+                                else {
+                                    rcvLocationFragment.setVisibility(View.GONE);
+                                    tvNoData.setVisibility(View.VISIBLE);
+                                    tvNoDataFound.setVisibility(View.VISIBLE);
                                 }//Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
                             }
                         });

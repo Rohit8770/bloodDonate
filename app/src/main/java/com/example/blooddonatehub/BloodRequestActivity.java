@@ -38,6 +38,7 @@ import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
 import com.example.blooddonatehub.Fragment.LocationFragment;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
 import com.example.blooddonatehub.Response.LocationListResponse;
+import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
@@ -73,6 +74,7 @@ public class BloodRequestActivity extends AppCompatActivity {
     LocationAdapter locationAdapter;
     RecyclerView rcvLocation;
     AppCompatSpinner spinnerLocation;
+    Tools tools;
 
 
     @Override
@@ -95,6 +97,8 @@ public class BloodRequestActivity extends AppCompatActivity {
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
         rcvLocation=findViewById(R.id.rcvLocation);
+        tools=new Tools(this);
+        tools.ScreenshotBlock(getWindow());
         // spinnerLocation=findViewById(R.id.spinnerLocation);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
@@ -239,6 +243,7 @@ public class BloodRequestActivity extends AppCompatActivity {
     }
 
     private void RequestForBloodCall() {
+        tools.showLoading();
 
         restcall.CallRequestForBlood("blood_donation",bloodTypeSp,bloodGroupSp,
                  etName.getText().toString(),
@@ -259,6 +264,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
                                 Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                             }
@@ -269,6 +275,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tools.stopLoading();
                                 if (bloodRequestListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)){
                                     etName.setText("");
                                     etDescription.setText("");

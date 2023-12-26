@@ -3,21 +3,14 @@ package com.example.blooddonatehub.Utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.blooddonatehub.R;
 
 public class Tools {
@@ -40,10 +33,10 @@ public class Tools {
         return false;
     }
 
- /*   public void showLoading() {
+    public void showLoading() {
         try {
             if (dialog != null) {
-                dialog.setContentView(R.layout.loadingdialog);
+                dialog.setContentView(R.layout.loading_dialog);
                 dialog.setCancelable(false);
                 if (!dialog.isShowing()) {
                     dialog.show();
@@ -52,7 +45,7 @@ public class Tools {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public void stopLoading() {
         try {
@@ -63,12 +56,6 @@ public class Tools {
             e.printStackTrace();
         }
     }
-
-  /*  public static void displayImage(Context context, ImageView img, String urlimg) {
-
-        Glide.with(context).load(urlimg).apply(new RequestOptions().placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.person_image)).into(img);
-
-    }*/
 
     public static String getRealPathFromURI(Context context, Uri contentUri) {
         String[] projection = {MediaStore.Images.Media.DATA};
@@ -83,25 +70,7 @@ public class Tools {
         return filePath;
     }
 
-
-
-
-
-
     public void ScreenshotBlock(Window window) {
         window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
