@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,15 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
     Context context;
     List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList;
     List<BloodDonateListResponse.GetBloodGroup> searchList;
+
+    EditClick editClick;
+    public  interface EditClick{
+        void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup);
+    }
+    public  void SetUpInterFace(EditClick editClick1){
+        this.editClick=editClick1;
+
+    }
 
     public AllPersonRelationAdapter(Context context, List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList) {
         this.context = context;
@@ -71,7 +81,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
 
-                String message = "Users Details for blood donation :\n\n"
+                String message = "Users requirement for blood :\n\n"
                         + "Name: " + holder.txName.getText().toString() + "\n"
                         + "Location: " + holder.txLocation.getText().toString() + "\n"
                         + "Blood Group: " + holder.txBloodGroup.getText().toString() + "\n"
@@ -82,6 +92,13 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 sendIntent.setType("text/plain");
                 Intent shareIntent = Intent.createChooser(sendIntent, "Share details using");
                 context.startActivity(shareIntent);
+            }
+        });
+        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editClick.EditPage(searchList.get(position));
+
             }
         });
 
@@ -97,6 +114,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
         TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup;
         ImageView imgShare,ivFollowed;
         TextView btnAccept;
+        RelativeLayout acceptBtn;
 
         public AllPersonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +127,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             txtime=itemView.findViewById(R.id.txTime);
             txBloodGroup=itemView.findViewById(R.id.txBloodGroup);
             imgShare=itemView.findViewById(R.id.imgShare);
+            acceptBtn=itemView.findViewById(R.id.acceptBtn);
             btnAccept=itemView.findViewById(R.id.btnAccept);
             ivFollowed=itemView.findViewById(R.id.ivFollowed);
             ivFollowed.setVisibility(View.GONE);
@@ -161,7 +180,5 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-
 
 }

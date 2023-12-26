@@ -153,6 +153,7 @@
                         android:src="@drawable/share_icon"
                         android:layout_marginTop="@dimen/_2ssp"/>
                     <ImageView
+                        android:id="@+id/downloadButton"
                         android:layout_width="@dimen/_30ssp"
                         android:layout_height="@dimen/_25ssp"
                         android:src="@drawable/location_share_icon"
@@ -172,6 +173,7 @@
                              android:backgroundTint="@color/newBlue"
                              android:layout_marginRight="@dimen/_10ssp"/>-->
                         <RelativeLayout
+                            android:id="@+id/acceptBtn"
                             android:layout_width="@dimen/_60ssp"
                             android:layout_height="@dimen/_20ssp"
                             android:layout_marginRight="@dimen/_3ssp"

@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
 
 public class BloodHomeActivity extends AppCompatActivity {
 
-    CardView cardRequestBlood, cardDonateBlood, cardContributeBlood;
+    CardView cardRequestBlood, cardDonateBlood, cardCompleteBlood;
     RecyclerView rcvBloodGroup;
     RelationAdapter posterAdapter;
     boolean flag = true;
@@ -91,7 +91,7 @@ public class BloodHomeActivity extends AppCompatActivity {
 
         cardRequestBlood = findViewById(R.id.cardRequestBlood);
         cardDonateBlood = findViewById(R.id.cardDonateBlood);
-        cardContributeBlood = findViewById(R.id.cardContributeBlood);
+        cardCompleteBlood = findViewById(R.id.cardCompleteBlood);
         rcvBloodGroup = findViewById(R.id.rcvBloodGroup);
         tools=new Tools(this);
         tools.ScreenshotBlock(getWindow());
@@ -120,16 +120,10 @@ public class BloodHomeActivity extends AppCompatActivity {
 
 
 
-        cardContributeBlood.setOnClickListener(new View.OnClickListener() {
+        cardCompleteBlood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BloodHomeActivity.this, ContributeActivity.class));
-            }
-        });
-        cardContributeBlood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BloodHomeActivity.this, ContributeActivity.class));
+                startActivity(new Intent(BloodHomeActivity.this, CompleteActivity.class));
             }
         });
         cardDonateBlood.setOnClickListener(new View.OnClickListener() {

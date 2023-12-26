@@ -293,7 +293,7 @@
             android:layout_weight="1"
             android:gravity="center">
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardContributeBlood"
+                android:id="@+id/cardCompleteBlood"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90ssp"
                 app:cardCornerRadius="@dimen/_10ssp"
@@ -307,13 +307,13 @@
                     android:layout_gravity="center">
                     <ImageView
                         android:layout_width="@dimen/_80ssp"
-                        android:layout_height="@dimen/_60ssp"
+                        android:layout_height="@dimen/_50ssp"
                         android:layout_gravity="center"
-                        android:src="@drawable/wallet_icon"/>
+                        android:src="@drawable/verification"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/blood_Contribute"
+                        android:text="Complete data"
                         android:fontFamily="@font/sofia_pro_semi_bold"
                         android:textSize="@dimen/_12ssp"
                         android:gravity="center"/>

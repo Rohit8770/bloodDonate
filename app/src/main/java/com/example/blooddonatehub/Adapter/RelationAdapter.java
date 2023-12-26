@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,16 +17,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.PosterDataHolder> {
 
     Context context;
     List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList;
+    List<BloodDonateListResponse.GetBloodGroup> searchList;
+
+    AllPersonRelationAdapter.EditClick editClick;
+    public  interface EditClick{
+        void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup);
+    }
+    public  void SetUpInterFace(AllPersonRelationAdapter.EditClick editClick1){
+        this.editClick=editClick1;
+
+    }
 
     public RelationAdapter(Context context, List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList) {
         this.context = context;
         this.bloodDonateListResponseList = bloodDonateListResponseList;
+        this.searchList = new ArrayList<>(bloodDonateListResponseList);
+
+    }
+
+    public boolean isEmpty() {
+        return getItemCount() == 0;
     }
 
     @NonNull
@@ -74,6 +92,12 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
                 context.startActivity(shareIntent);
             }
         });
+        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editClick.EditPage(searchList.get(position));
+            }
+        });
     }
 
     @Override
@@ -85,6 +109,7 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
         TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup;
         ImageView imgShare,ivFollowed;
         TextView btnAccept;
+        RelativeLayout acceptBtn;
        public PosterDataHolder(@NonNull View itemView) {
            super(itemView);
            txName=itemView.findViewById(R.id.txName);
@@ -92,12 +117,46 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
            txUnit=itemView.findViewById(R.id.txUnit);
            txLocation=itemView.findViewById(R.id.txLocation);
            txtime=itemView.findViewById(R.id.txTime);
+           acceptBtn=itemView.findViewById(R.id.acceptBtn);
            txBloodGroup=itemView.findViewById(R.id.txBloodGroup);
            imgShare=itemView.findViewById(R.id.imgShare);
            btnAccept=itemView.findViewById(R.id.btnAccept);
            ivFollowed=itemView.findViewById(R.id.ivFollowed);
            ivFollowed.setVisibility(View.GONE);       }
    }
+
+    public void Search(CharSequence charSequence, RecyclerView categoryListRecyclerView) {
+        try {
+            String charString = charSequence.toString().toLowerCase().trim();
+            if (charString.isEmpty()) {
+                searchList = new ArrayList<>(bloodDonateListResponseList);
+                categoryListRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                List<BloodDonateListResponse.GetBloodGroup> filterList = new ArrayList<>();
+                for (BloodDonateListResponse.GetBloodGroup row : bloodDonateListResponseList) {
+                    if (row.getPatientFullName().toLowerCase().contains(charString) ||
+                            row.getLocation().toLowerCase().contains(charString) ||
+                            row.getSelectUnits().toLowerCase().contains(charString) ||
+                            row.getBloodGroup().toLowerCase().contains(charString) ||
+                            row.getDate().toLowerCase().contains(charString) ||
+                            row.getBloodGroup().toLowerCase().contains(charString)) {
+                        filterList.add(row);
+                    }
+                }
+                searchList = new ArrayList<>(filterList);
+
+                if (searchList.isEmpty()) {
+                    categoryListRecyclerView.setVisibility(View.GONE);
+                } else {
+                    categoryListRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+            notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void openAcceptDialog() {
 

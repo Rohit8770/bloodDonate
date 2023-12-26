@@ -135,8 +135,8 @@ public class SecondDonateFragment extends Fragment {
                             @Override
                             public void run() {
                                 tools.stopLoading();
-                                if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE))
-                                       {
+                                if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
+
                                            rcvBloodType.setVisibility(View.VISIBLE);
                                            tvNoData.setVisibility(View.GONE);
                                            tvNoDataFound.setVisibility(View.GONE);
@@ -146,7 +146,14 @@ public class SecondDonateFragment extends Fragment {
                                     allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), bloodDonateListResponse.getGetBloodGroupList());
                                     rcvBloodType.setAdapter(allPersonRelationAdapter);
 
-                                } else {
+                                    allPersonRelationAdapter.SetUpInterFace(new AllPersonRelationAdapter.EditClick() {
+                                        @Override
+                                        public void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+
+                                        }
+                                    });
+                                }
+                                else {
                                     rcvBloodType.setVisibility(View.GONE);
                                 tvNoData.setVisibility(View.VISIBLE);
                                 tvNoDataFound.setVisibility(View.VISIBLE);

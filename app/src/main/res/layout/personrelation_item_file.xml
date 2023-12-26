@@ -173,6 +173,7 @@
                             android:backgroundTint="@color/newBlue"
                             android:layout_marginRight="@dimen/_10ssp"/>-->
                         <RelativeLayout
+                            android:id="@+id/acceptBtn"
                             android:layout_width="@dimen/_60ssp"
                             android:layout_height="@dimen/_20ssp"
                             android:layout_marginRight="@dimen/_10ssp"
