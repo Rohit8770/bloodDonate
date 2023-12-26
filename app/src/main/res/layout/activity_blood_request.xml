@@ -66,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40ssp"
                         android:background="@drawable/edittext_shape"
-                        android:padding="@dimen/_10ssp"
+                        android:padding="@dimen/_12ssp"
                         android:layout_margin="@dimen/_12ssp">
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/bloodTypeSpinner"
@@ -80,7 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40ssp"
                         android:background="@drawable/edittext_shape"
-                        android:padding="@dimen/_10ssp"
+                        android:padding="@dimen/_12ssp"
                         android:layout_margin="@dimen/_12ssp">
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/bloodGroupSpinner"
@@ -201,7 +201,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40ssp"
                         android:background="@drawable/edittext_shape"
-                        android:padding="@dimen/_10ssp"
+                        android:padding="@dimen/_12ssp"
                         android:layout_margin="@dimen/_12ssp"
                         android:orientation="vertical">
                   <!--    <TextView

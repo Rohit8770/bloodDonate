@@ -132,3 +132,129 @@ public class AreaResponse implements Serializable {
 }
 
 }
+
+
+
+/*
+package com.example.blooddonatehub.Response;
+
+        import android.hardware.Camera;
+
+        import java.io.Serializable;
+        import java.util.List;
+        import com.google.gson.annotations.Expose;
+        import com.google.gson.annotations.SerializedName;
+
+        import javax.annotation.processing.Generated;
+
+@Generated("jsonschema2pojo")
+public class LocationListResponse implements Serializable {
+
+    @SerializedName("areaList")
+    @Expose
+    private List<LocationListResponse.Area> areaList;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+    public LocationListResponse(List<LocationListResponse.Area> areaList, String message, String status) {
+        this.areaList = areaList;
+        this.message = message;
+        this.status = status;
+    }
+
+    public List<LocationListResponse.Area> getAreaList() {
+        return areaList;
+    }
+
+    public void setAreaList(List<LocationListResponse.Area> areaList) {
+        this.areaList = areaList;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+    public class Area implements Serializable {
+
+        @SerializedName("area_id")
+        @Expose
+        private String areaId;
+        @SerializedName("AreaName")
+        @Expose
+        private String areaName;
+        @SerializedName("PINCode")
+        @Expose
+        private String pINCode;
+        @SerializedName("City")
+        @Expose
+        private String city;
+        @SerializedName("State")
+        @Expose
+        private String state;
+
+        public Area(String areaId, String areaName, String pINCode, String city, String state) {
+            this.areaId = areaId;
+            this.areaName = areaName;
+            this.pINCode = pINCode;
+            this.city = city;
+            this.state = state;
+        }
+
+        public String getAreaId() {
+            return areaId;
+        }
+
+        public void setAreaId(String areaId) {
+            this.areaId = areaId;
+        }
+
+        public String getAreaName() {
+            return areaName;
+        }
+
+        public void setAreaName(String areaName) {
+            this.areaName = areaName;
+        }
+
+        public String getpINCode() {
+            return pINCode;
+        }
+
+        public void setpINCode(String pINCode) {
+            this.pINCode = pINCode;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+    }
+}*/

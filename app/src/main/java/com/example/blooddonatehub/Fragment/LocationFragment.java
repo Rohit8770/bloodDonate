@@ -106,15 +106,15 @@ public class LocationFragment extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (locationAdapter != null) {
                     locationAdapter.Search(s, rcvLocationFragment);
+                }
 
-                    boolean isSearchResultsEmpty = locationAdapter.isEmpty();
-                    if (isSearchResultsEmpty) {
-                        tvNoDataFound.setVisibility(View.VISIBLE);
-                        tvNoData.setVisibility(View.VISIBLE);
-                    } else {
-                        tvNoDataFound.setVisibility(View.GONE);
-                        tvNoData.setVisibility(View.GONE);
-                    }
+                boolean isSearchResultsEmpty = locationAdapter.isEmpty();
+                if (isSearchResultsEmpty) {
+                    tvNoDataFound.setVisibility(View.VISIBLE);
+                    tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    tvNoDataFound.setVisibility(View.GONE);
+                    tvNoData.setVisibility(View.GONE);
                 }
             }
 
@@ -127,12 +127,75 @@ public class LocationFragment extends DialogFragment {
 
         return view;
     }
-
     private void LocationCall() {
         tools.showLoading();
         String location="Ahe";
 
         restcall.LocationCall("search_pincode",location)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<LocationListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    @Override
+                    public void onNext(LocationListResponse locationListResponse) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
+                                        && locationListResponse.getAreaResponseList() != null && locationListResponse.getAreaResponseList().size() > 0) {
+
+                                    //  rcvLocationFragment.setVisibility(View.VISIBLE);
+                                    rcvLocationFragment.setVisibility(View.VISIBLE);
+                                    tvNoData.setVisibility(View.GONE);
+                                    tvNoDataFound.setVisibility(View.GONE);
+
+                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+                                    rcvLocationFragment.setLayoutManager(layoutManager);
+                                    locationAdapter = new LocationAdapter(getContext(), locationListResponse.getAreaResponseList());
+                                    rcvLocationFragment.setAdapter(locationAdapter);
+
+                                    locationAdapter.SetUpInterFace(new LocationAdapter.LocationClick() {
+                                        @Override
+                                        public void SetLocation(LocationListResponse.AreaResponse listLocation) {
+                                            etSearchLocation.setText(listLocation.getAreaName()+ " " +listLocation.getCity()+ " "  +listLocation.getState() + " " +listLocation.getPincode());
+                                            //    rcvLocationFragment.setVisibility(View.GONE);
+
+                                            if (dataClick != null) {
+                                                dataClick.dataClick(etSearchLocation.getText().toString());
+                                                dismiss();
+                                            }
+                                        }
+                                    });
+                                }
+                                else {
+                                    rcvLocationFragment.setVisibility(View.GONE);
+                                    tvNoData.setVisibility(View.VISIBLE);
+                                    tvNoDataFound.setVisibility(View.VISIBLE);
+                                }Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+    }
+    /*private void LocationCall() {
+        tools.showLoading();
+        String location="Ahe";
+
+        restcall.LocationCall("getallAreaList",location)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(new Subscriber<LocationListResponse>() {
@@ -167,7 +230,7 @@ public class LocationFragment extends DialogFragment {
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvLocationFragment.setLayoutManager(layoutManager);
-                                    locationAdapter = new LocationAdapter(getContext(), locationListResponse.getAreaResponseList());
+                                    locationAdapter = new LocationAdapter(getContext(),locationListResponse.getAreaResponseList());
                                     rcvLocationFragment.setAdapter(locationAdapter);
 
                                     locationAdapter.SetUpInterFace(new LocationAdapter.LocationClick() {
@@ -183,10 +246,10 @@ public class LocationFragment extends DialogFragment {
                                         }
                                     });
 
-                                   /* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
+                                   *//* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
                                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     spinnerLocationSuggest.setAdapter(adapter);
-                                    spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*/
+                                    spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*//*
 
                                 }
                                 else {
@@ -198,5 +261,5 @@ public class LocationFragment extends DialogFragment {
                         });
                     }
                 });
-    }
+    }*/
 }

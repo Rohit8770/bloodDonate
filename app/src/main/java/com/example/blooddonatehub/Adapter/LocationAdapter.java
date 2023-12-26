@@ -1,6 +1,7 @@
 package com.example.blooddonatehub.Adapter;
 
 import android.content.Context;
+import android.hardware.Camera;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     LocationClick locationClick;
 
+    public LocationAdapter(Context context, List<LocationListResponse.AreaResponse> areaResponseList) {
+        this.context = context;
+        this.areaResponseList = areaResponseList;
+        this.searchList=new ArrayList<>(areaResponseList);
+    }
+
+
+
     public interface LocationClick{
         void SetLocation(LocationListResponse.AreaResponse areaResponse1);
     }
@@ -32,11 +41,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         this.locationClick=locationClick1;
     }
 
-    public LocationAdapter(Context context, List<LocationListResponse.AreaResponse> areaResponseList) {
+ /*   public LocationAdapter(Context context, List<LocationListResponse.Area> areaResponseList) {
         this.context = context;
         this.areaResponseList = areaResponseList;
         this.searchList = new ArrayList<>(areaResponseList);
-    }
+    }*/
 
     public boolean isEmpty() {
         return getItemCount() == 0;
@@ -69,9 +78,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
         holder.txArea.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)  {
-
-                locationClick.SetLocation(areaResponseList.get(position));
+            public void onClick(View view) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    locationClick.SetLocation(searchList.get(adapterPosition));
+                }
             }
         });
     }
@@ -101,9 +112,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
                 categoryListRecyclerView.setVisibility(View.VISIBLE);
             } else {
                 List<LocationListResponse.AreaResponse> filterList = new ArrayList<>();
-                for (LocationListResponse.AreaResponse Row : areaResponseList) {
-                    if (Row.getAreaName().toLowerCase().contains(charString.toLowerCase())) {
-                        filterList.add(Row);
+                for (LocationListResponse.AreaResponse row : areaResponseList) {
+                    if (row.getAreaName().toLowerCase().contains(charString) ||
+                            row.getPincode().toLowerCase().contains(charString) ||
+                            row.getCity().toLowerCase().contains(charString) ||
+                            row.getState().toLowerCase().contains(charString)) {
+                        filterList.add(row);
                     }
                 }
                 searchList = new ArrayList<>(filterList);

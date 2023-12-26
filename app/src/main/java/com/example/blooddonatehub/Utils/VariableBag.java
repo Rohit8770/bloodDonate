@@ -14,7 +14,7 @@ public class VariableBag {
     public static  String Key_Token="token";
 
     // API
-    public static  String BASE_URL="http://192.168.1.67/Survey_project/";
+    public static  String BASE_URL="http://192.168.43.167/Survey_project/";
     public static  String API_KEY="";
     public static  String SUCCESS_CODE="200";
     public static  String FAIL_CODE="201";

@@ -19,10 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
-import com.example.blooddonatehub.Adapter.PosterAdapter;
+import com.example.blooddonatehub.Adapter.RelationAdapter;
 import com.example.blooddonatehub.Adapter.ViewPagerAdapter;
 import com.example.blooddonatehub.Fragment.DonateMargeActivity;
-import com.example.blooddonatehub.Model.PosterDataModel;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
@@ -40,10 +39,12 @@ public class BloodHomeActivity extends AppCompatActivity {
 
     CardView cardRequestBlood, cardDonateBlood, cardContributeBlood;
     RecyclerView rcvBloodGroup;
-    PosterAdapter posterAdapter;
+    RelationAdapter posterAdapter;
     boolean flag = true;
     ImageView imgPoster;
-    AllPersonRelationAdapter allPersonRelationAdapter;
+    //AllPersonRelationAdapter allPersonRelationAdapter;
+
+    RelationAdapter relationAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
     private int currentPosition = 1;
     private DotsIndicator dotsIndicator;
@@ -104,8 +105,9 @@ public class BloodHomeActivity extends AppCompatActivity {
      /*   tvNoDataFound.setVisibility(View.GONE);
         tvNoData.setVisibility(View.GONE);
 */
-        GetallBloodgroupCall();
 
+        GetallBloodgroupCall();
+    //    startAutoScroll();
 
 
         mSLideViewPager = findViewById(R.id.slideViewPager);
@@ -196,8 +198,8 @@ public class BloodHomeActivity extends AppCompatActivity {
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(BloodHomeActivity.this, RecyclerView.HORIZONTAL, false);
                                     rcvBloodGroup.setLayoutManager(layoutManager);
-                                    allPersonRelationAdapter = new AllPersonRelationAdapter(BloodHomeActivity.this, filteredList);
-                                    rcvBloodGroup.setAdapter(allPersonRelationAdapter);
+                                    relationAdapter = new RelationAdapter(BloodHomeActivity.this, filteredList);
+                                    rcvBloodGroup.setAdapter(relationAdapter);
 
                                     if (filteredList.isEmpty()) {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
@@ -225,23 +227,30 @@ public class BloodHomeActivity extends AppCompatActivity {
     }
 
 
-/*    private void startAutoScroll() {
+   /* private void startAutoScroll() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int itemCount = posterAdapter.getItemCount();
+                int itemCount = relationAdapter.getItemCount();
 
                 if (currentPosition < itemCount - 1) {
                     currentPosition++;
+                    rcvBloodGroup.smoothScrollToPosition(currentPosition);
+                    handler.postDelayed(this, 3000);
                 } else {
-                    currentPosition = 0;
+                    // If currentPosition is at the last item, pause for a while and then restart from the beginning
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            rcvBloodGroup.smoothScrollToPosition(currentPosition);
+                            handler.postDelayed(this, 3000);
+                        }
+                    }, 3000); // Pause for 3 seconds
                 }
-
-           //     rcvBloodType.smoothScrollToPosition(currentPosition);
-                handler.postDelayed(this, 3000);
             }
         }, 3000);
     }*/
+
 
    /* private void startAutoScroll() {
 
