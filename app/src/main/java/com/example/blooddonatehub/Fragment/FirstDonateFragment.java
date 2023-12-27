@@ -41,7 +41,7 @@ import rx.schedulers.Schedulers;
 
 public class FirstDonateFragment extends Fragment {
     //AllPersonRelationAdapter allPersonRelationAdapter;
-    RelationAdapter relationAdapter;
+   AllPersonRelationAdapter allPersonRelationAdapter;
     RecyclerView rcvBloodType;
     EditText etSearch;
     ImageView tvNoData;
@@ -73,10 +73,10 @@ public class FirstDonateFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if (relationAdapter != null) {
-                    relationAdapter.Search(charSequence, rcvBloodType);
+                if (allPersonRelationAdapter != null) {
+                    allPersonRelationAdapter.Search(charSequence, rcvBloodType);
                 }
-                boolean isSearchResultsEmpty = relationAdapter.isEmpty();
+                boolean isSearchResultsEmpty = allPersonRelationAdapter.isEmpty();
                 if (isSearchResultsEmpty) {
                     tvNoDataFound.setVisibility(View.VISIBLE);
                     tvNoData.setVisibility(View.VISIBLE);
@@ -126,15 +126,10 @@ public class FirstDonateFragment extends Fragment {
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvBloodType.setLayoutManager(layoutManager);
-                                    relationAdapter = new RelationAdapter(getContext(), filteredList);
-                                    rcvBloodType.setAdapter(relationAdapter);
+                                    allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), filteredList);
+                                    rcvBloodType.setAdapter(allPersonRelationAdapter);
 
-                                    relationAdapter.SetUpInterFace(new RelationAdapter.EditClick() {
-                                        @Override
-                                        public void EditPage1(BloodDonateListResponse.GetBloodGroup bloodGroup) {
 
-                                        }
-                                    });
 
                                     if (filteredList.isEmpty()) {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
@@ -218,8 +213,6 @@ public class FirstDonateFragment extends Fragment {
                     }
                 });
     }*/
-
-
 
    /* //privious date (data)
     private void GetallBloodgroupCall() {

@@ -25,8 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
+import com.example.blooddonatehub.BloodRequestActivity;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
+import com.example.blooddonatehub.Response.BloodRequestListResponse;
+import com.example.blooddonatehub.Response.EditStatusListResponse;
+import com.example.blooddonatehub.Utils.SharedPreference;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
@@ -48,6 +52,7 @@ public class SecondDonateFragment extends Fragment {
     LinearLayout voiceSearch;
     private static final int VOICE_SEARCH_REQUEST_CODE = 123;
 
+
     Restcall restcall;
     Tools tools;
     @Override
@@ -68,6 +73,8 @@ public class SecondDonateFragment extends Fragment {
         tvNoData.setVisibility(View.GONE);*/
 
         GetallBloodgroupCall();
+
+
 
 
         voiceSearch.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +156,8 @@ public class SecondDonateFragment extends Fragment {
                                     allPersonRelationAdapter.SetUpInterFace(new AllPersonRelationAdapter.EditClick() {
                                         @Override
                                         public void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+                                            String requestId = bloodGroup.getRequestId();
+                                            EditStatus(requestId);
 
                                         }
                                     });
@@ -207,6 +216,45 @@ public class SecondDonateFragment extends Fragment {
                 });
         }
 
+
+
+    private void EditStatus(String requestId) {
+        tools.showLoading();
+
+        restcall.EditStatus("ActivateCategory",requestId,"0")
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<EditStatusListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    @Override
+                    public void onNext(EditStatusListResponse editStatusListResponse) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                if (editStatusListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)){
+
+                                }
+                                Toast.makeText(getContext(), editStatusListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+    }
 
 
 

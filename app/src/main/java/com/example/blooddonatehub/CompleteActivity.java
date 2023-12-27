@@ -14,11 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonatehub.Adapter.AcceptedBloodAdapter;
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
 import com.example.blooddonatehub.R;
+import com.example.blooddonatehub.Response.AcceptedBloodListResponse;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
@@ -34,10 +37,11 @@ public class CompleteActivity extends AppCompatActivity {
 
     ImageView imgBack;
     RecyclerView rcvAcceptedData;
-    AllPersonRelationAdapter allPersonRelationAdapter;
+    AcceptedBloodAdapter acceptedBloodAdapter;
     Restcall restcall;
     Tools tools;
-    ImageView tvNoData,voiceSearch;
+    LinearLayout voiceSearch;
+    ImageView tvNoData;
     private static final int VOICE_SEARCH_REQUEST_CODE = 123;
     TextView tvNoDataFound;
     EditText etSearch;
@@ -65,7 +69,7 @@ public class CompleteActivity extends AppCompatActivity {
         voiceSearch=findViewById(R.id.voiceSearch);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
-        GetallBloodgroupCall();
+        AcceptedBloodCall();
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,15 +88,14 @@ public class CompleteActivity extends AppCompatActivity {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if (allPersonRelationAdapter != null) {
-                    allPersonRelationAdapter.Search(charSequence, rcvAcceptedData);
+                if (acceptedBloodAdapter != null) {
+                    acceptedBloodAdapter.Search(charSequence, rcvAcceptedData);
 
-                    boolean isSearchResultsEmpty = allPersonRelationAdapter.isEmpty();
+                    boolean isSearchResultsEmpty = acceptedBloodAdapter.isEmpty();
                     if (isSearchResultsEmpty) {
                         tvNoDataFound.setVisibility(View.VISIBLE);
                         tvNoData.setVisibility(View.VISIBLE);
@@ -102,7 +105,6 @@ public class CompleteActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -112,12 +114,12 @@ public class CompleteActivity extends AppCompatActivity {
 
     }
 
-    private void GetallBloodgroupCall() {
+    private void AcceptedBloodCall() {
         tools.showLoading();
-        restcall.GetallBloodgroups("getallBloodgroups")
+        restcall.AcceptedBloodCall("requestApproveBloodgroups")
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
-                .subscribe(new Subscriber<BloodDonateListResponse>() {
+                .subscribe(new Subscriber<AcceptedBloodListResponse>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -135,41 +137,29 @@ public class CompleteActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(BloodDonateListResponse bloodDonateListResponse) {
+                    public void onNext(AcceptedBloodListResponse acceptedBloodListResponse) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 tools.stopLoading();
-                                boolean isFlag = true;
-                                if (isFlag) {
-                                    if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
+                                    if (acceptedBloodListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
                                     rcvAcceptedData.setVisibility(View.VISIBLE);
                                     tvNoData.setVisibility(View.GONE);
                                     tvNoDataFound.setVisibility(View.GONE);
 
                                         LinearLayoutManager layoutManager = new LinearLayoutManager(CompleteActivity.this, RecyclerView.VERTICAL, false);
                                         rcvAcceptedData.setLayoutManager(layoutManager);
-                                        allPersonRelationAdapter = new AllPersonRelationAdapter(CompleteActivity.this, bloodDonateListResponse.getGetBloodGroupList());
-                                        rcvAcceptedData.setAdapter(allPersonRelationAdapter);
-
-                                        allPersonRelationAdapter.SetUpInterFace(new AllPersonRelationAdapter.EditClick() {
-                                            @Override
-                                            public void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup) {
-
-                                            }
-                                        });
+                                        acceptedBloodAdapter = new AcceptedBloodAdapter(CompleteActivity.this, acceptedBloodListResponse.getGetBloodGroupList());
+                                        rcvAcceptedData.setAdapter(acceptedBloodAdapter);
                                     }
                                     else {
                                         rcvAcceptedData.setVisibility(View.GONE);
                                         tvNoData.setVisibility(View.VISIBLE);
                                         tvNoDataFound.setVisibility(View.VISIBLE);
                                 }
-                                    Toast.makeText(CompleteActivity.this, bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // Flag is false, do something else or show a message
-                                    Toast.makeText(CompleteActivity.this, "Flag is false, API list not shown", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CompleteActivity.this, acceptedBloodListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            }
+
                         });
                     }
 
@@ -243,8 +233,8 @@ public class CompleteActivity extends AppCompatActivity {
     }
     public  void searchListCategory(String BloodGroup){
 
-        allPersonRelationAdapter.Search(BloodGroup,rcvAcceptedData);
-        if (allPersonRelationAdapter.isEmpty()){
+        acceptedBloodAdapter.Search(BloodGroup,rcvAcceptedData);
+        if (acceptedBloodAdapter.isEmpty()){
             tvNoData.setVisibility(View.GONE);
             tvNoDataFound.setVisibility(View.GONE);
         }

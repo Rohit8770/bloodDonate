@@ -69,9 +69,8 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
         holder.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editClick.EditPage(searchList.get(position));
                 openAcceptDialog();
-                holder.ivFollowed.setVisibility(View.VISIBLE);
-                holder.btnAccept.setVisibility(View.GONE);
             }
         });
 
@@ -94,13 +93,6 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                 context.startActivity(shareIntent);
             }
         });
-        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editClick.EditPage(searchList.get(position));
-
-            }
-        });
 
     }
 
@@ -113,8 +105,8 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
 
         TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup;
         ImageView imgShare,ivFollowed;
-        TextView btnAccept;
-        RelativeLayout acceptBtn;
+
+        RelativeLayout btnAccept;
 
         public AllPersonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,7 +119,6 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             txtime=itemView.findViewById(R.id.txTime);
             txBloodGroup=itemView.findViewById(R.id.txBloodGroup);
             imgShare=itemView.findViewById(R.id.imgShare);
-            acceptBtn=itemView.findViewById(R.id.acceptBtn);
             btnAccept=itemView.findViewById(R.id.btnAccept);
             ivFollowed=itemView.findViewById(R.id.ivFollowed);
             ivFollowed.setVisibility(View.GONE);

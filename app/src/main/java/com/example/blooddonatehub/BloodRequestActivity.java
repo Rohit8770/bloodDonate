@@ -39,6 +39,7 @@ import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
 import com.example.blooddonatehub.Fragment.LocationFragment;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
 import com.example.blooddonatehub.Response.LocationListResponse;
+import com.example.blooddonatehub.Utils.SharedPreference;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
@@ -77,7 +78,6 @@ public class BloodRequestActivity extends AppCompatActivity {
     AppCompatSpinner spinnerLocation;
     Tools tools;
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -105,7 +105,6 @@ public class BloodRequestActivity extends AppCompatActivity {
         switchCritical=findViewById(R.id.switchCritical);
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
-      //  rcvLocation=findViewById(R.id.rcvLocation);
         tools=new Tools(this);
         tools.ScreenshotBlock(getWindow());
         // spinnerLocation=findViewById(R.id.spinnerLocation);
@@ -236,6 +235,9 @@ public class BloodRequestActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
 
         txCalender.setOnClickListener(new View.OnClickListener() {
             @Override
