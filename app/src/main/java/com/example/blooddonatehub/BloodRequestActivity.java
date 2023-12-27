@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -72,11 +73,19 @@ public class BloodRequestActivity extends AppCompatActivity {
     TextInputEditText etName,etMobileNumber,etDescription;
     Restcall restcall;
     LocationAdapter locationAdapter;
-    RecyclerView rcvLocation;
+  //  RecyclerView rcvLocation;
     AppCompatSpinner spinnerLocation;
     Tools tools;
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, BloodHomeActivity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +105,7 @@ public class BloodRequestActivity extends AppCompatActivity {
         switchCritical=findViewById(R.id.switchCritical);
         txSubmitRequest=findViewById(R.id.txSubmitRequest);
         txAgreeMentCondition=findViewById(R.id.txAgreeMentCondition);
-        rcvLocation=findViewById(R.id.rcvLocation);
+      //  rcvLocation=findViewById(R.id.rcvLocation);
         tools=new Tools(this);
         tools.ScreenshotBlock(getWindow());
         // spinnerLocation=findViewById(R.id.spinnerLocation);
@@ -132,6 +141,8 @@ public class BloodRequestActivity extends AppCompatActivity {
                 LocationFragment locationFragment = new LocationFragment();
                 locationFragment.show(fragmentTransaction, "#tag");
                 locationFragment.setCancelable(false);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
 
                 locationFragment.setupInterface(new LocationFragment.DataClick() {
                     @Override
@@ -179,6 +190,7 @@ public class BloodRequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         txSubmitRequest.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +232,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                 }else {
                     RequestForBloodCall();
                     finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });
@@ -284,8 +297,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                                     checkBoxAgree.setText("");
                                     txDate.setText("");
                                     switchCritical.setText("");
-
-
                                 }
                                 Toast.makeText(BloodRequestActivity.this, bloodRequestListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -341,7 +352,6 @@ public class BloodRequestActivity extends AppCompatActivity {
                     }
                 });
     }*/
-
    /* private void LocationCall() {
 
         restcall.LocationCall("search_pincode",etLocation.getText().toString())

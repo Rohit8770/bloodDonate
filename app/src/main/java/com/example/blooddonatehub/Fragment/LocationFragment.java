@@ -1,15 +1,20 @@
 package com.example.blooddonatehub.Fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +36,8 @@ import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
+
+import java.util.ArrayList;
 
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -46,7 +54,8 @@ public class LocationFragment extends DialogFragment {
     Tools tools;
     ImageView tvNoData;
     TextView tvNoDataFound;
-
+    LinearLayout voiceSearch;
+    private static final int VOICE_SEARCH_REQUEST_CODE = 123;
     DataClick dataClick;
     public interface DataClick{
         void dataClick(String data);
@@ -77,7 +86,7 @@ public class LocationFragment extends DialogFragment {
         etSearchLocation=view.findViewById(R.id.etSearchLocation);
         tvNoData = view.findViewById(R.id.tvNoData);
         tvNoDataFound = view.findViewById(R.id.tvNoDataFound);
-     //   btnDoneLocation=view.findViewById(R.id.btnDoneLocation);
+        voiceSearch = view.findViewById(R.id.voiceSearch);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
         LocationCall();
@@ -88,13 +97,13 @@ public class LocationFragment extends DialogFragment {
             }
         });
 
-        /*btnDoneLocation.setOnClickListener(new View.OnClickListener() {
+
+        voiceSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                openVoiceSearch();
             }
-        });*/
-
+        });
 
         etSearchLocation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -262,4 +271,34 @@ public class LocationFragment extends DialogFragment {
                     }
                 });
     }*/
+
+    public void openVoiceSearch() {
+        Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        startActivityForResult(i, VOICE_SEARCH_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VOICE_SEARCH_REQUEST_CODE && resultCode == RESULT_OK) {
+            ArrayList<String> arrayList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (!arrayList.isEmpty()){
+                String voice =arrayList.get(0);
+                searchListCategory(voice);
+            }else {
+                Toast.makeText(getContext(), "No voice detected", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public  void searchListCategory(String BloodGroup){
+
+        locationAdapter.Search(BloodGroup,rcvLocationFragment);
+        if (locationAdapter.isEmpty()){
+            tvNoData.setVisibility(View.GONE);
+            tvNoDataFound.setVisibility(View.GONE);
+        }
+    }
 }

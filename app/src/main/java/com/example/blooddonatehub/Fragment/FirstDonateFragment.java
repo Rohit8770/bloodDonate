@@ -22,6 +22,7 @@ import com.example.blooddonatehub.Adapter.RelationAdapter;
 import com.example.blooddonatehub.BloodHomeActivity;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
+import com.example.blooddonatehub.Response.BloodRequestListResponse;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
@@ -33,6 +34,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import rx.Observer;
+import rx.Scheduler;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
@@ -126,6 +129,13 @@ public class FirstDonateFragment extends Fragment {
                                     relationAdapter = new RelationAdapter(getContext(), filteredList);
                                     rcvBloodType.setAdapter(relationAdapter);
 
+                                    relationAdapter.SetUpInterFace(new RelationAdapter.EditClick() {
+                                        @Override
+                                        public void EditPage1(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+
+                                        }
+                                    });
+
                                     if (filteredList.isEmpty()) {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
                                         tvNoData.setVisibility(View.VISIBLE);
@@ -147,10 +157,8 @@ public class FirstDonateFragment extends Fragment {
                         }
                         return filteredList;
                     }
-
                 });
-    }
-
+        }
 
 
 

@@ -239,10 +239,10 @@
                                 android:text="Please select location"
                                 android:fontFamily="@font/sofia_pro_regular"
                                 android:textSize="@dimen/_14ssp"/>
-                                <androidx.recyclerview.widget.RecyclerView
+                               <!-- <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/rcvLocation"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"/>
+                                    android:layout_height="match_parent"/>-->
 
                            </RelativeLayout>
                     </LinearLayout>
@@ -348,8 +348,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_15ssp"
                             android:backgroundTint="@color/newBlue"
-                            android:layout_marginBottom="@dimen/_8ssp"
+                            android:layout_marginBottom="@dimen/_7ssp"
                             android:text="Send Request"/>
                    <!-- <TextView
                         android:id="@+id/txSubmitRequest"

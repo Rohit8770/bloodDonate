@@ -26,13 +26,13 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
     List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList;
     List<BloodDonateListResponse.GetBloodGroup> searchList;
 
-    AllPersonRelationAdapter.EditClick editClick;
+    EditClick editClick;
     public  interface EditClick{
-        void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup);
+        void EditPage1(BloodDonateListResponse.GetBloodGroup bloodGroup);
     }
-    public  void SetUpInterFace(AllPersonRelationAdapter.EditClick editClick1){
-        this.editClick=editClick1;
 
+    public  void SetUpInterFace(RelationAdapter.EditClick editClick1){
+        this.editClick=editClick1;
     }
 
     public RelationAdapter(Context context, List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList) {
@@ -95,7 +95,7 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editClick.EditPage(searchList.get(position));
+                editClick.EditPage1(searchList.get(position));
             }
         });
     }
@@ -138,8 +138,7 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
                             row.getLocation().toLowerCase().contains(charString) ||
                             row.getSelectUnits().toLowerCase().contains(charString) ||
                             row.getBloodGroup().toLowerCase().contains(charString) ||
-                            row.getDate().toLowerCase().contains(charString) ||
-                            row.getBloodGroup().toLowerCase().contains(charString)) {
+                            row.getDate().toLowerCase().contains(charString)) {
                         filterList.add(row);
                     }
                 }

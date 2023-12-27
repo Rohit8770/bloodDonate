@@ -147,8 +147,7 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
                             row.getLocation().toLowerCase().contains(charString) ||
                             row.getSelectUnits().toLowerCase().contains(charString) ||
                             row.getBloodGroup().toLowerCase().contains(charString) ||
-                            row.getDate().toLowerCase().contains(charString) ||
-                            row.getBloodGroup().toLowerCase().contains(charString)) {
+                            row.getDate().toLowerCase().contains(charString)) {
                         filterList.add(row);
                     }
                 }

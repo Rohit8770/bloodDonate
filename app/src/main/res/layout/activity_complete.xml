@@ -52,7 +52,143 @@
             android:layout_weight="0.3"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/layoutSecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35ssp"
+                    android:layout_marginLeft="@dimen/_15ssp"
+                    android:layout_marginRight="@dimen/_15ssp"
+                    android:background="@drawable/search_shape"
+                    android:weightSum="5"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1">
+                        <ImageView
+                            android:layout_width="@dimen/_20ssp"
+                            android:layout_height="@dimen/_20ssp"
+                            android:layout_marginLeft="@dimen/_10ssp"
+                            android:src="@drawable/search_icon"
+                            app:tint="@color/black" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="4.5">
+                        <EditText
+                            android:id="@+id/etSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/_10ssp"
+                            android:background="@null"
+                            android:hint="Search..."
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:textSize="@dimen/_15ssp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/voiceSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.4"
+                        android:layout_marginLeft="@dimen/_10ssp">
+                        <ImageView
+                            android:layout_width="@dimen/_20ssp"
+                            android:layout_height="@dimen/_20ssp"
+                            android:src="@drawable/voice_icon" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/_60ssp"
+                    android:layout_height="@dimen/_40ssp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/_8ssp"
+                    android:gravity="center">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/_60ssp"
+                        android:layout_height="@dimen/_30ssp"
+                        android:backgroundTint="@color/newBlue"
+                        app:cardCornerRadius="@dimen/_20ssp">
+
+                        <LinearLayout
+                            android:id="@+id/LyFilterBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="@dimen/_20ssp"
+                                android:layout_height="@dimen/_20ssp"
+                                android:src="@drawable/filter_icon"
+                                android:tint="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/_5ssp"
+                                android:text="Filters"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/ly22"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rl1"
+                android:layout_margin="@dimen/_7ssp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvAcceptedData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/tvNoData"
+                        android:layout_width="@dimen/_100ssp"
+                        android:layout_height="@dimen/_100ssp"
+                        android:src="@drawable/no_data_found" />
+                    <TextView
+                        android:id="@+id/tvNoDataFound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:text="No Data Found"
+                        android:textSize="@dimen/_18ssp" />
+                </LinearLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>

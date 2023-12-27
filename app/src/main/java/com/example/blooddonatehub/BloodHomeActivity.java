@@ -124,18 +124,21 @@ public class BloodHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BloodHomeActivity.this, CompleteActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         cardDonateBlood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BloodHomeActivity.this, DonateMargeActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         cardRequestBlood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BloodHomeActivity.this, BloodRequestActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -218,7 +221,7 @@ public class BloodHomeActivity extends AppCompatActivity {
                     }
 
                 });
-    }
+        }
 
 
    /* private void startAutoScroll() {

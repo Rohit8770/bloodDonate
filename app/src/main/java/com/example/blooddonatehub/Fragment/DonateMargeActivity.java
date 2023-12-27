@@ -27,6 +27,15 @@ public class DonateMargeActivity extends AppCompatActivity {
     Tools tools;
     ImageView imgBack;
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, BloodHomeActivity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +53,8 @@ public class DonateMargeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(DonateMargeActivity.this, BloodHomeActivity.class));
+               // startActivity(new Intent(DonateMargeActivity.this, BloodHomeActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         view.setAdapter(new ViewPagerAdapter(DonateMargeActivity.this));

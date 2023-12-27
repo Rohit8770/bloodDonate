@@ -205,7 +205,7 @@ public class SecondDonateFragment extends Fragment {
 */
 
                 });
-    }
+        }
 
 
 
@@ -231,11 +231,12 @@ public class SecondDonateFragment extends Fragment {
             Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
-    public  void searchListCategory(String CategoryName){
+    public  void searchListCategory(String BloodGroup){
 
-        allPersonRelationAdapter.Search(CategoryName,rcvBloodType);
+        allPersonRelationAdapter.Search(BloodGroup,rcvBloodType);
         if (allPersonRelationAdapter.isEmpty()){
-            tvNoData.setVisibility(View.VISIBLE);
+            tvNoData.setVisibility(View.GONE);
+            tvNoDataFound.setVisibility(View.GONE);
         }
     }
 }
