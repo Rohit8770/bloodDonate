@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,6 +46,7 @@ import rx.schedulers.Schedulers;
 public class FirstDonateFragment extends Fragment {
     //AllPersonRelationAdapter allPersonRelationAdapter;
    AllPersonRelationAdapter allPersonRelationAdapter;
+   SwipeRefreshLayout refresh;
     RecyclerView rcvBloodType;
     EditText etSearch;
     ImageView tvNoData;
@@ -61,13 +63,21 @@ public class FirstDonateFragment extends Fragment {
         etSearch = v.findViewById(R.id.etSearch);
         tvNoData = v.findViewById(R.id.tvNoData);
         tvNoDataFound = v.findViewById(R.id.tvNoDataFound);
+        refresh = v.findViewById(R.id.refresh);
         tools=new Tools(getContext());
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
-      /*  tvNoDataFound.setVisibility(View.GONE);
-        tvNoData.setVisibility(View.GONE);*/
 
         GetallBloodgroupCall();
+
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                GetallBloodgroupCall();
+                refresh.setRefreshing(false);
+            }
+        });
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,7 +123,7 @@ public class FirstDonateFragment extends Fragment {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                             //   Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -193,7 +203,7 @@ public class FirstDonateFragment extends Fragment {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                            //    Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

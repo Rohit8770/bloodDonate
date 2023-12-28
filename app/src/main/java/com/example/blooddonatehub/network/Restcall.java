@@ -26,7 +26,8 @@ public interface Restcall {
             @Field("select_units") String select_units,
             @Field("critical_situation") String critical_situation,
             @Field("description") String description,
-            @Field("location") String location);
+            @Field("location") String location,
+            @Field("request_status") String request_status);
 
     @FormUrlEncoded
     @POST("blood_donorsapi/blood_donation_apis.php")

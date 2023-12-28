@@ -57,6 +57,7 @@ public class BloodRequestActivity extends AppCompatActivity {
   //  RecyclerView rcvLocation;
     AppCompatSpinner spinnerLocation;
     Tools tools;
+    String status;
 
     @Override
     public void onBackPressed() {
@@ -240,13 +241,14 @@ public class BloodRequestActivity extends AppCompatActivity {
     private void RequestForBloodCall() {
         tools.showLoading();
 
+
         restcall.CallRequestForBlood("blood_donation",bloodTypeSp,bloodGroupSp,
                  etName.getText().toString(),
                         etMobileNumber.getText().toString(),
                         txDate.getText().toString(),
                         bloodUnitsSp,  switchCritical.isChecked() ? "Critical" : "Not Critical",
                         etDescription.getText().toString(),
-                        etLocation.getText().toString())
+                        etLocation.getText().toString(),status)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(new Subscriber<BloodRequestListResponse>() {
@@ -261,7 +263,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                              //  Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BloodRequestActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -280,7 +282,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                                     txDate.setText("");
                                     switchCritical.setText("");
                                 }
-                             //   Toast.makeText(BloodRequestActivity.this, bloodRequestListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                               Toast.makeText(BloodRequestActivity.this, bloodRequestListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

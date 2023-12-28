@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class CompleteActivity extends AppCompatActivity {
     ImageView imgBack;
     RecyclerView rcvAcceptedData;
     AcceptedBloodAdapter acceptedBloodAdapter;
+    SwipeRefreshLayout refresh;
     Restcall restcall;
     Tools tools;
     LinearLayout voiceSearch;
@@ -66,10 +68,19 @@ public class CompleteActivity extends AppCompatActivity {
         tvNoDataFound=findViewById(R.id.tvNoDataFound);
         rcvAcceptedData=findViewById(R.id.rcvAcceptedData);
         etSearch=findViewById(R.id.etSearch);
+        refresh=findViewById(R.id.refresh);
         voiceSearch=findViewById(R.id.voiceSearch);
         restcall = RestClient.createService(Restcall.class, VariableBag.BASE_URL, VariableBag.API_KEY);
 
         AcceptedBloodCall();
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                AcceptedBloodCall();
+                refresh.setRefreshing(false);
+            }
+        });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +121,6 @@ public class CompleteActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void AcceptedBloodCall() {
@@ -135,7 +144,6 @@ public class CompleteActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onNext(AcceptedBloodListResponse acceptedBloodListResponse) {
                         runOnUiThread(new Runnable() {
@@ -158,54 +166,12 @@ public class CompleteActivity extends AppCompatActivity {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
                                 }
                                   //  Toast.makeText(CompleteActivity.this, acceptedBloodListResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
+                            }
 
                         });
                     }
-
-
-                  /*  @Override
-                    public void onNext(BloodDonateListResponse bloodDonateListResponse) {
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
-                                    // Filter the data for blood group B+
-                                    List<BloodDonateListResponse.GetBloodGroup> filteredList = filterData(bloodDonateListResponse.getGetBloodGroupList(), "");
-
-                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-                                    rcvBloodType.setLayoutManager(layoutManager);
-                                    allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), filteredList);
-                                    rcvBloodType.setAdapter(allPersonRelationAdapter);
-
-                                    // Check if the filtered list is empty and show/hide the appropriate views
-                                    if (filteredList.isEmpty()) {
-                                        tvNoDataFound.setVisibility(View.VISIBLE);
-                                        tvNoData.setVisibility(View.VISIBLE);
-                                    } else {
-                                        tvNoDataFound.setVisibility(View.GONE);
-                                        tvNoData.setVisibility(View.GONE);
-                                    }
-                                }
-                                Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                    // Method to filter data based on blood group
-                    private List<BloodDonateListResponse.GetBloodGroup> filterData(List<BloodDonateListResponse.GetBloodGroup> dataList, String bloodGroup) {
-                        List<BloodDonateListResponse.GetBloodGroup> filteredList = new ArrayList<>();
-                        for (BloodDonateListResponse.GetBloodGroup item : dataList) {
-                            if (item.getBloodGroup().equalsIgnoreCase(bloodGroup)) {
-                                filteredList.add(item);
-                            }
-                        }
-                        return filteredList;
-                    }
-*/
-
                 });
-    }
+        }
 
 
 
