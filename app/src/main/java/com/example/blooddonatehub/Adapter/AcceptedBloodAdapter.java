@@ -1,6 +1,7 @@
 package com.example.blooddonatehub.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,27 @@ public class AcceptedBloodAdapter extends RecyclerView.Adapter<AcceptedBloodAdap
         holder.txLocation.setText( bloodGroup.getLocation());
         holder.txCritical.setText(bloodGroup.getCriticalSituation());
         holder.txBloodGroup.setText(bloodGroup.getBloodGroup());
+        holder.txCurrentTime.setText(bloodGroup.getRequest_accept_date());
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+
+                String message = "Users requirement for blood :\n\n"
+                        + "Name: " + holder.txName.getText().toString() + "\n"
+                        + "Location: " + holder.txLocation.getText().toString() + "\n"
+                        + "Blood Group: " + holder.txBloodGroup.getText().toString() + "\n"
+                        + "Units: " + holder.txUnit.getText().toString() + "\n"
+                        + "Date: " + holder.txtime.getText().toString();
+
+                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, "Share details using");
+                context.startActivity(shareIntent);
+            }
+        });
     }
 
     @Override
@@ -60,7 +82,7 @@ public class AcceptedBloodAdapter extends RecyclerView.Adapter<AcceptedBloodAdap
     }
 
     public  class AcceptViewHolder extends RecyclerView.ViewHolder {
-        TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup;
+        TextView txName,txCritical,txUnit,txLocation,txtime,txBloodGroup,txCurrentTime;
         ImageView imgShare,ivFollowed;
 
         RelativeLayout btnAccept;
@@ -75,8 +97,7 @@ public class AcceptedBloodAdapter extends RecyclerView.Adapter<AcceptedBloodAdap
             txBloodGroup=itemView.findViewById(R.id.txBloodGroup);
             imgShare=itemView.findViewById(R.id.imgShare);
             btnAccept=itemView.findViewById(R.id.btnAccept);
-            ivFollowed=itemView.findViewById(R.id.ivFollowed);
-            ivFollowed.setVisibility(View.GONE);
+            txCurrentTime=itemView.findViewById(R.id.txCurrentTime);
 
         }
     }

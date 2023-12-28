@@ -41,7 +41,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/_18ssp"
                     android:fontFamily="@font/sofia_pro_regular"
-                    android:text="Completed data"
+                    android:text="Accepted Request"
                     />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -162,8 +162,7 @@
                 android:id="@+id/ly22"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/rl1"
-                android:layout_margin="@dimen/_7ssp">
+                android:layout_below="@id/rl1">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvAcceptedData"

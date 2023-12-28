@@ -192,7 +192,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_140sdp"
-                app:cardCornerRadius="@dimen/_7ssp"
+                app:cardElevation="@dimen/_5ssp"
+                app:cardCornerRadius="@dimen/_5ssp"
                 android:layout_marginRight="@dimen/_7ssp"
                 android:layout_marginLeft="@dimen/_7ssp">
                 <androidx.viewpager.widget.ViewPager
@@ -313,7 +314,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Complete data"
+                        android:text="Accepted Request"
                         android:fontFamily="@font/sofia_pro_semi_bold"
                         android:textSize="@dimen/_12ssp"
                         android:gravity="center"/>
@@ -327,8 +328,7 @@
                 android:id="@+id/ly22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ly3"
-                android:layout_margin="@dimen/_2ssp">
+                android:layout_below="@id/ly3">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvBloodGroup"
                     android:layout_width="match_parent"

@@ -50,7 +50,6 @@ public class LocationFragment extends DialogFragment {
     EditText etSearchLocation;
     Restcall restcall;
     LocationAdapter locationAdapter;
-    Button btnDoneLocation;
     Tools tools;
     ImageView tvNoData;
     TextView tvNoDataFound;
@@ -154,7 +153,7 @@ public class LocationFragment extends DialogFragment {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -181,7 +180,6 @@ public class LocationFragment extends DialogFragment {
                                         @Override
                                         public void SetLocation(LocationListResponse.AreaResponse listLocation) {
                                             etSearchLocation.setText(listLocation.getAreaName()+ " " +listLocation.getCity()+ " "  +listLocation.getState() + " " +listLocation.getPincode());
-                                            //    rcvLocationFragment.setVisibility(View.GONE);
 
                                             if (dataClick != null) {
                                                 dataClick.dataClick(etSearchLocation.getText().toString());
@@ -194,83 +192,12 @@ public class LocationFragment extends DialogFragment {
                                     rcvLocationFragment.setVisibility(View.GONE);
                                     tvNoData.setVisibility(View.VISIBLE);
                                     tvNoDataFound.setVisibility(View.VISIBLE);
-                                }Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+                                }//Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
     }
-    /*private void LocationCall() {
-        tools.showLoading();
-        String location="Ahe";
-
-        restcall.LocationCall("getallAreaList",location)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.newThread())
-                .subscribe(new Subscriber<LocationListResponse>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tools.stopLoading();
-                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    @Override
-                    public void onNext(LocationListResponse locationListResponse) {
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tools.stopLoading();
-                                if (locationListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)
-                                        && locationListResponse.getAreaResponseList() != null && locationListResponse.getAreaResponseList().size() > 0) {
-
-                                  //  rcvLocationFragment.setVisibility(View.VISIBLE);
-
-                                    rcvLocationFragment.setVisibility(View.VISIBLE);
-                                    tvNoData.setVisibility(View.GONE);
-                                    tvNoDataFound.setVisibility(View.GONE);
-
-                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-                                    rcvLocationFragment.setLayoutManager(layoutManager);
-                                    locationAdapter = new LocationAdapter(getContext(),locationListResponse.getAreaResponseList());
-                                    rcvLocationFragment.setAdapter(locationAdapter);
-
-                                    locationAdapter.SetUpInterFace(new LocationAdapter.LocationClick() {
-                                        @Override
-                                        public void SetLocation(LocationListResponse.AreaResponse listLocation) {
-                                            etSearchLocation.setText(listLocation.getAreaName()+ " " +listLocation.getCity()+ " "  +listLocation.getState() + " " +listLocation.getPincode());
-                                        //    rcvLocationFragment.setVisibility(View.GONE);
-
-                                            if (dataClick != null) {
-                                                dataClick.dataClick(etSearchLocation.getText().toString());
-                                                dismiss();
-                                            }
-                                        }
-                                    });
-
-                                   *//* ArrayAdapter<LocationListResponse.Pincode> adapter = new ArrayAdapter<>(BloodRequestActivity.this, android.R.layout.simple_spinner_item, locationListResponse.getPincodes());
-                                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    spinnerLocationSuggest.setAdapter(adapter);
-                                    spinnerData.equals("Suggested locations: " + locationListResponse.getPincodes().toString());*//*
-
-                                }
-                                else {
-                                    rcvLocationFragment.setVisibility(View.GONE);
-                                    tvNoData.setVisibility(View.VISIBLE);
-                                    tvNoDataFound.setVisibility(View.VISIBLE);
-                                }//Toast.makeText(BloodRequestActivity.this, "success", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-    }*/
 
     public void openVoiceSearch() {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);

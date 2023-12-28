@@ -31,11 +31,14 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
     EditClick editClick;
     public  interface EditClick{
         void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup);
+        void FilterDialog(BloodDonateListResponse.GetBloodGroup bloodGroup);
+
     }
     public  void SetUpInterFace(EditClick editClick1){
         this.editClick=editClick1;
 
     }
+
 
     public AllPersonRelationAdapter(Context context, List<BloodDonateListResponse.GetBloodGroup> bloodDonateListResponseList) {
         this.context = context;
@@ -70,7 +73,8 @@ public class AllPersonRelationAdapter extends RecyclerView.Adapter<AllPersonRela
             @Override
             public void onClick(View v) {
                 editClick.EditPage(searchList.get(position));
-                openAcceptDialog();
+                editClick.FilterDialog(searchList.get(position));
+
             }
         });
 

@@ -14,6 +14,7 @@
 
     //indicator color
     <color name="inactive">#C4C4C4</color>
+    <color name="newOne">#FCFFFF</color>
     <color name="active">#2ba8e0</color>
 
 </resources>

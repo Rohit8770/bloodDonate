@@ -2,6 +2,8 @@ package com.example.blooddonatehub;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -21,8 +23,11 @@ import android.widget.Toast;
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
 import com.example.blooddonatehub.Adapter.RelationAdapter;
 import com.example.blooddonatehub.Adapter.ViewPagerAdapter;
+import com.example.blooddonatehub.Fragment.CongressFilterFragment;
 import com.example.blooddonatehub.Fragment.DonateMargeActivity;
+import com.example.blooddonatehub.Fragment.LocationFragment;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
+import com.example.blooddonatehub.Response.EditStatusListResponse;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
@@ -179,7 +184,7 @@ public class BloodHomeActivity extends AppCompatActivity {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                                Toast.makeText(BloodHomeActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(BloodHomeActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -198,6 +203,22 @@ public class BloodHomeActivity extends AppCompatActivity {
                                     relationAdapter = new RelationAdapter(BloodHomeActivity.this, filteredList);
                                     rcvBloodGroup.setAdapter(relationAdapter);
 
+                                    relationAdapter.SetUpInterFace(new RelationAdapter.EditClick() {
+                                        @Override
+                                        public void EditPage1(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+                                            String requestId = bloodGroup.getRequestId();
+                                              EditStatus(requestId);
+                                        }
+
+                                        @Override
+                                        public void FilterDialog(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+                                            FragmentManager fragmentManager = getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            CongressFilterFragment congressFilterFragment = new CongressFilterFragment();
+                                            congressFilterFragment.show(fragmentTransaction, "#tag");
+                                            congressFilterFragment.setCancelable(false);
+                                        }
+                                    });
                                     if (filteredList.isEmpty()) {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
                                         tvNoData.setVisibility(View.VISIBLE);
@@ -206,9 +227,9 @@ public class BloodHomeActivity extends AppCompatActivity {
                                         tvNoData.setVisibility(View.GONE);
                                     }
                                 }
-                                Toast.makeText(BloodHomeActivity.this, bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                //  Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        });
+                       });
                     }
                     private List<BloodDonateListResponse.GetBloodGroup> filterData(List<BloodDonateListResponse.GetBloodGroup> dataList, String bloodGroup) {
                         List<BloodDonateListResponse.GetBloodGroup> filteredList = new ArrayList<>();
@@ -219,9 +240,47 @@ public class BloodHomeActivity extends AppCompatActivity {
                         }
                         return filteredList;
                     }
-
                 });
-        }
+    }
+
+    private void EditStatus(String requestId) {
+        tools.showLoading();
+
+        restcall.EditStatus("ActivateCategory",requestId,"0")
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<EditStatusListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        GetallBloodgroupCall();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                                //    Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    @Override
+                    public void onNext(EditStatusListResponse editStatusListResponse) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                if (editStatusListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)){
+
+                                }
+                                //  Toast.makeText(getContext(), editStatusListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+    }
 
 
    /* private void startAutoScroll() {

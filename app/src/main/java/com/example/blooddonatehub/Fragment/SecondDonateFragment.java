@@ -7,9 +7,10 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.speech.RecognizerIntent;
 import android.text.Editable;
@@ -25,19 +26,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
-import com.example.blooddonatehub.BloodRequestActivity;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
-import com.example.blooddonatehub.Response.BloodRequestListResponse;
 import com.example.blooddonatehub.Response.EditStatusListResponse;
-import com.example.blooddonatehub.Utils.SharedPreference;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -131,11 +128,10 @@ public class SecondDonateFragment extends Fragment {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
-
                     @Override
                     public void onNext(BloodDonateListResponse bloodDonateListResponse) {
                         requireActivity().runOnUiThread(new Runnable() {
@@ -147,6 +143,8 @@ public class SecondDonateFragment extends Fragment {
                                            rcvBloodType.setVisibility(View.VISIBLE);
                                            tvNoData.setVisibility(View.GONE);
                                            tvNoDataFound.setVisibility(View.GONE);
+
+
 
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                                     rcvBloodType.setLayoutManager(layoutManager);
@@ -160,6 +158,15 @@ public class SecondDonateFragment extends Fragment {
                                             EditStatus(requestId);
 
                                         }
+
+                                        @Override
+                                        public void FilterDialog(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+                                            FragmentManager fragmentManager = getChildFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            CongressFilterFragment congressFilterFragment = new CongressFilterFragment();
+                                            congressFilterFragment.show(fragmentTransaction, "#tag");
+                                            congressFilterFragment.setCancelable(false);
+                                        }
                                     });
                                 }
                                 else {
@@ -167,52 +174,10 @@ public class SecondDonateFragment extends Fragment {
                                 tvNoData.setVisibility(View.VISIBLE);
                                 tvNoDataFound.setVisibility(View.VISIBLE);
                             }
-                                Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
-
-
-                  /*  @Override
-                    public void onNext(BloodDonateListResponse bloodDonateListResponse) {
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (bloodDonateListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)) {
-                                    // Filter the data for blood group B+
-                                    List<BloodDonateListResponse.GetBloodGroup> filteredList = filterData(bloodDonateListResponse.getGetBloodGroupList(), "");
-
-                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-                                    rcvBloodType.setLayoutManager(layoutManager);
-                                    allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), filteredList);
-                                    rcvBloodType.setAdapter(allPersonRelationAdapter);
-
-                                    // Check if the filtered list is empty and show/hide the appropriate views
-                                    if (filteredList.isEmpty()) {
-                                        tvNoDataFound.setVisibility(View.VISIBLE);
-                                        tvNoData.setVisibility(View.VISIBLE);
-                                    } else {
-                                        tvNoDataFound.setVisibility(View.GONE);
-                                        tvNoData.setVisibility(View.GONE);
-                                    }
-                                }
-                                Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                    // Method to filter data based on blood group
-                    private List<BloodDonateListResponse.GetBloodGroup> filterData(List<BloodDonateListResponse.GetBloodGroup> dataList, String bloodGroup) {
-                        List<BloodDonateListResponse.GetBloodGroup> filteredList = new ArrayList<>();
-                        for (BloodDonateListResponse.GetBloodGroup item : dataList) {
-                            if (item.getBloodGroup().equalsIgnoreCase(bloodGroup)) {
-                                filteredList.add(item);
-                            }
-                        }
-                        return filteredList;
-                    }
-*/
-
                 });
         }
 
@@ -227,6 +192,7 @@ public class SecondDonateFragment extends Fragment {
                 .subscribe(new Subscriber<EditStatusListResponse>() {
                     @Override
                     public void onCompleted() {
+                        GetallBloodgroupCall();
                     }
 
                     @Override
@@ -249,7 +215,7 @@ public class SecondDonateFragment extends Fragment {
                                 if (editStatusListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)){
 
                                 }
-                                Toast.makeText(getContext(), editStatusListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getContext(), editStatusListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

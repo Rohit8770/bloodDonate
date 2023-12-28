@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="@dimen/_3ssp"
+        app:cardElevation="@dimen/_5ssp"
         app:cardUseCompatPadding="true">
 
 

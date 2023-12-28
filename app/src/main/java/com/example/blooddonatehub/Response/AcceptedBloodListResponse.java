@@ -105,12 +105,31 @@ public class GetBloodGroup implements Serializable {
     @SerializedName("request_status")
     @Expose
     private String requestStatus;
+    @SerializedName("request_accept_date")
+    @Expose
+    private String request_accept_date;
     private final static long serialVersionUID = 7429455513015806649L;
 
     /**
      * No args constructor for use in serialization
      */
     public GetBloodGroup() {
+    }
+
+    public GetBloodGroup(String requestId, String userId, String bloodType, String bloodGroup, String patientFullName, String patientMobileno, String date, String location, String selectUnits, String criticalSituation, String description, String requestStatus, String request_accept_date) {
+        this.requestId = requestId;
+        this.userId = userId;
+        this.bloodType = bloodType;
+        this.bloodGroup = bloodGroup;
+        this.patientFullName = patientFullName;
+        this.patientMobileno = patientMobileno;
+        this.date = date;
+        this.location = location;
+        this.selectUnits = selectUnits;
+        this.criticalSituation = criticalSituation;
+        this.description = description;
+        this.requestStatus = requestStatus;
+        this.request_accept_date = request_accept_date;
     }
 
     /**
@@ -127,21 +146,7 @@ public class GetBloodGroup implements Serializable {
      * @param userId
      * @param requestStatus
      */
-    public GetBloodGroup(String requestId, String userId, String bloodType, String bloodGroup, String patientFullName, String patientMobileno, String date, String location, String selectUnits, String criticalSituation, String description, String requestStatus) {
-        super();
-        this.requestId = requestId;
-        this.userId = userId;
-        this.bloodType = bloodType;
-        this.bloodGroup = bloodGroup;
-        this.patientFullName = patientFullName;
-        this.patientMobileno = patientMobileno;
-        this.date = date;
-        this.location = location;
-        this.selectUnits = selectUnits;
-        this.criticalSituation = criticalSituation;
-        this.description = description;
-        this.requestStatus = requestStatus;
-    }
+
 
     public String getRequestId() {
         return requestId;
@@ -237,6 +242,14 @@ public class GetBloodGroup implements Serializable {
 
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;
+    }
+
+    public String getRequest_accept_date() {
+        return request_accept_date;
+    }
+
+    public void setRequest_accept_date(String request_accept_date) {
+        this.request_accept_date = request_accept_date;
     }
 }
 

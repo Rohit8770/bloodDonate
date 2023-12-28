@@ -1,57 +1,37 @@
 package com.example.blooddonatehub;
 
-import static com.example.blooddonatehub.Utils.Tools.isValidEmail;
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.blooddonatehub.Adapter.AllPersonRelationAdapter;
 import com.example.blooddonatehub.Adapter.LocationAdapter;
 import com.example.blooddonatehub.Fragment.ConditionAgreeMentFragment;
 import com.example.blooddonatehub.Fragment.LocationFragment;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
-import com.example.blooddonatehub.Response.LocationListResponse;
-import com.example.blooddonatehub.Utils.SharedPreference;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
 import com.example.blooddonatehub.network.Restcall;
-import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import rx.Subscriber;
@@ -281,7 +261,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                                Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(BloodRequestActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -300,7 +280,7 @@ public class BloodRequestActivity extends AppCompatActivity {
                                     txDate.setText("");
                                     switchCritical.setText("");
                                 }
-                                Toast.makeText(BloodRequestActivity.this, bloodRequestListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(BloodRequestActivity.this, bloodRequestListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

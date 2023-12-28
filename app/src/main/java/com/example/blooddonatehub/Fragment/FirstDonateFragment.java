@@ -3,6 +3,8 @@ package com.example.blooddonatehub.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +25,7 @@ import com.example.blooddonatehub.BloodHomeActivity;
 import com.example.blooddonatehub.R;
 import com.example.blooddonatehub.Response.BloodDonateListResponse;
 import com.example.blooddonatehub.Response.BloodRequestListResponse;
+import com.example.blooddonatehub.Response.EditStatusListResponse;
 import com.example.blooddonatehub.Utils.Tools;
 import com.example.blooddonatehub.Utils.VariableBag;
 import com.example.blooddonatehub.network.RestClient;
@@ -110,7 +113,7 @@ public class FirstDonateFragment extends Fragment {
                             public void run() {
                                 tools.stopLoading();
                                 Log.e("API Error", "Error: " + e.getLocalizedMessage());
-                                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -129,7 +132,23 @@ public class FirstDonateFragment extends Fragment {
                                     allPersonRelationAdapter = new AllPersonRelationAdapter(getContext(), filteredList);
                                     rcvBloodType.setAdapter(allPersonRelationAdapter);
 
+                                    allPersonRelationAdapter.SetUpInterFace(new AllPersonRelationAdapter.EditClick() {
+                                        @Override
+                                        public void EditPage(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+                                            String requestId = bloodGroup.getRequestId();
+                                            EditStatus(requestId);
 
+                                        }
+
+                                        @Override
+                                        public void FilterDialog(BloodDonateListResponse.GetBloodGroup bloodGroup) {
+                                            FragmentManager fragmentManager = getChildFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            CongressFilterFragment congressFilterFragment = new CongressFilterFragment();
+                                            congressFilterFragment.show(fragmentTransaction, "#tag");
+                                            congressFilterFragment.setCancelable(false);
+                                        }
+                                    });
 
                                     if (filteredList.isEmpty()) {
                                         tvNoDataFound.setVisibility(View.VISIBLE);
@@ -139,7 +158,7 @@ public class FirstDonateFragment extends Fragment {
                                         tvNoData.setVisibility(View.GONE);
                                     }
                                 }
-                                Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getContext(), bloodDonateListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -155,6 +174,44 @@ public class FirstDonateFragment extends Fragment {
                 });
         }
 
+    private void EditStatus(String requestId) {
+        tools.showLoading();
+
+        restcall.EditStatus("ActivateCategory",requestId,"0")
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<EditStatusListResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        GetallBloodgroupCall();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                Log.e("API Error", "Error: " + e.getLocalizedMessage());
+                            //    Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    @Override
+                    public void onNext(EditStatusListResponse editStatusListResponse) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tools.stopLoading();
+                                if (editStatusListResponse.getStatus().equalsIgnoreCase(VariableBag.SUCCESS_CODE)){
+
+                                }
+                              //  Toast.makeText(getContext(), editStatusListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+    }
 
 
    /*

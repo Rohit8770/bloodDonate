@@ -157,7 +157,7 @@ public class CompleteActivity extends AppCompatActivity {
                                         tvNoData.setVisibility(View.VISIBLE);
                                         tvNoDataFound.setVisibility(View.VISIBLE);
                                 }
-                                    Toast.makeText(CompleteActivity.this, acceptedBloodListResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                  //  Toast.makeText(CompleteActivity.this, acceptedBloodListResponse.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
 
                         });

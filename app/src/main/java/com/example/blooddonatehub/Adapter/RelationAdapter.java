@@ -29,6 +29,7 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
     EditClick editClick;
     public  interface EditClick{
         void EditPage1(BloodDonateListResponse.GetBloodGroup bloodGroup);
+        void FilterDialog(BloodDonateListResponse.GetBloodGroup bloodGroup);
     }
 
     public  void SetUpInterFace(RelationAdapter.EditClick editClick1){
@@ -68,7 +69,11 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
         holder.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAcceptDialog();
+
+                editClick.EditPage1(searchList.get(position));
+                editClick.FilterDialog(searchList.get(position));
+
+
                 holder.ivFollowed.setVisibility(View.VISIBLE);
                 holder.btnAccept.setVisibility(View.GONE);
             }
@@ -92,12 +97,7 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
                 context.startActivity(shareIntent);
             }
         });
-        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editClick.EditPage1(searchList.get(position));
-            }
-        });
+
     }
 
     @Override
@@ -158,13 +158,16 @@ public class RelationAdapter extends RecyclerView.Adapter<RelationAdapter.Poster
 
 
     private void openAcceptDialog() {
-
+        // Create a new AlertDialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         builder.setTitle("Thank you for Accepting");
+        ImageView imageView = new ImageView(context);
+        imageView.setImageResource(R.drawable.verification);
+        builder.setView(imageView);
         builder.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 dialog.dismiss();
             }
         });
